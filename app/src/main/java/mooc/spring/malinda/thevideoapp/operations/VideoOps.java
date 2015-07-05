@@ -1,6 +1,9 @@
 package mooc.spring.malinda.thevideoapp.operations;
 
+import android.app.Activity;
+import android.content.ContentUris;
 import android.content.Intent;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 
@@ -8,6 +11,7 @@ import java.lang.ref.WeakReference;
 
 import mooc.spring.malinda.thevideoapp.activities.MainActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
+import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
 public class VideoOps {
 
@@ -37,6 +41,17 @@ public class VideoOps {
     public void whenTakingVideoCompletes(int requestCode, int resultCode, Intent data)
     {
         Log.i(Constants.TAG, "Video recording complete, callback received.");
+
+        if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == Activity.RESULT_OK)
+        {
+            Uri videoUri = data.getData();
+            Long videoId = ContentUris.parseId(videoUri);
+            Log.i(Constants.TAG, "We have a recorded video. Uri is " + videoUri + "; id is " + videoId);
+        }
+        else {
+            Toaster.Show(getActivity(), "Sorry there was no video to upload :(");
+        }
+
     }
 
     public void onConfiguration(MainActivity activity,
