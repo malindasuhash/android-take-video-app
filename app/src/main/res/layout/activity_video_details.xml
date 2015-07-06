@@ -8,11 +8,24 @@
     tools:context="mooc.spring.malinda.thevideoapp.activities.VideoDetailsActivity"
     android:weightSum="1">
 
-    <VideoView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/videoView"
-        android:layout_weight="0.76" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start_playing"
+            android:id="@+id/startPlaying"
+            android:nestedScrollingEnabled="false" />
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
