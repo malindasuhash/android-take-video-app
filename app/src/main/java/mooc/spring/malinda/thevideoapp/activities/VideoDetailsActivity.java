@@ -1,29 +1,33 @@
 package mooc.spring.malinda.thevideoapp.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.ConfigurationHandledActivity;
-import mooc.spring.malinda.thevideoapp.operations.VideoOps;
+import mooc.spring.malinda.thevideoapp.framework.Constants;
+import mooc.spring.malinda.thevideoapp.operations.VideoDetailsOps;
 
-
-public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
+public class VideoDetailsActivity extends ConfigurationHandledActivity<VideoDetailsOps> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        super.handleConfiguration(VideoOps.class);
+        setContentView(R.layout.activity_video_details);
+
+        Log.i(Constants.TAG, "Loading video details");
+
+        super.handleConfiguration(VideoDetailsOps.class);
+
+        mOps.loadVideoData(getIntent());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_video_details, menu);
         return true;
     }
 
@@ -40,21 +44,5 @@ public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Invokes the intent to open the build in camera to take the video.
-     */
-    public void takeVideo(View view)
-    {
-        this.mOps.takeVideo();
-    }
-
-    /**
-        Delegates the call to operations to validate and do the bits.
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        this.mOps.whenTakingVideoCompletes(requestCode, resultCode, data);
     }
 }

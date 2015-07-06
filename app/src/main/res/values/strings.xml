@@ -6,4 +6,9 @@
     <string name="take_a_new_video">Take a new video!</string>
     <string name="sync_with_server">Sync with Server!</string>
     <string name="video_list">Videos in device and server</string>
+    <string name="title_activity_video_details">VideoDetailsActivity</string>
+    <string name="video_size">Size</string>
+    <string name="fil_location" />
+    <string name="file_location">Location</string>
+    <string name="Stars" >Stars!</string>
 </resources>
