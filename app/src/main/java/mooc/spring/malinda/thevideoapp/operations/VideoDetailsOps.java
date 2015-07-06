@@ -3,6 +3,7 @@ package mooc.spring.malinda.thevideoapp.operations;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ImageView;
@@ -43,6 +44,20 @@ public class VideoDetailsOps implements OpsConfig {
 
         setVideoProperties(videoFile);
         setVideoThumbnail(videoId);
+    }
+
+    /**
+     * Plays the video using the implicit intent.
+     */
+    public void playVideo()
+    {
+        Intent intent = mFacade.makePlayVideoIntent(getActivity(), Uri.parse(mFilePath));
+
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null)
+        {
+            Log.i(Constants.TAG, "Invoking the intent to play video");
+            getActivity().startActivity(intent);
+        }
     }
 
     /**

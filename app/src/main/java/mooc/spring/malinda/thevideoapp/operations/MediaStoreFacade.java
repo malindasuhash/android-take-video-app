@@ -2,9 +2,13 @@ package mooc.spring.malinda.thevideoapp.operations;
 
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
+
+import mooc.spring.malinda.thevideoapp.framework.Constants;
 
 public class MediaStoreFacade {
 
@@ -94,5 +98,15 @@ public class MediaStoreFacade {
                 // returned by the Query.
                 return null;
         }
+    }
+
+    public Intent makePlayVideoIntent(Context context, Uri videoUri)
+    {
+        Log.i(Constants.TAG, "Making an intent to play video");
+
+        Intent playVideo = new Intent(Intent.ACTION_VIEW);
+        playVideo.setDataAndType(videoUri, "video/mp4");
+
+        return playVideo;
     }
 }

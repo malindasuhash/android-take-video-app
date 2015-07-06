@@ -13,4 +13,5 @@
     <string name="Stars" >Stars!</string>
     <string name="start_playing">Play video!</string>
     <string name="stop_playing">Stop</string>
+    <string name="upload_video">Upload video now!</string>
 </resources>

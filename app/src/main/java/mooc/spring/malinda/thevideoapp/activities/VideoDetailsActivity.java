@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.ConfigurationHandledActivity;
@@ -22,6 +23,14 @@ public class VideoDetailsActivity extends ConfigurationHandledActivity<VideoDeta
         super.handleConfiguration(VideoDetailsOps.class);
 
         mOps.loadVideoData(getIntent());
+    }
+
+    /**
+     * Plays the video using an implicit intent.
+     */
+    public void playVideo(View view)
+    {
+        mOps.playVideo();
     }
 
     @Override
