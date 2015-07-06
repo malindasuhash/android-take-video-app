@@ -16,6 +16,7 @@ import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.activities.VideoDetailsActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.framework.OpsConfig;
+import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
 public class VideoDetailsOps implements OpsConfig {
 
@@ -57,6 +58,8 @@ public class VideoDetailsOps implements OpsConfig {
         {
             Log.i(Constants.TAG, "Invoking the intent to play video");
             getActivity().startActivity(intent);
+        } else {
+            Toaster.Show(getActivity(), "Sorry, there isn't any app to play back video.");
         }
     }
 
