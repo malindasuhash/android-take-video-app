@@ -6,8 +6,8 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
-    <uses-permission android:name = "android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name = "android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -31,9 +31,16 @@
 
         <activity
             android:name=".activities.VideoDetailsActivity"
-            android:label="@string/title_activity_video_details"
-            android:exported="false">
+            android:exported="false"
+            android:label="@string/title_activity_video_details" >
         </activity>
+
+        <provider
+            android:name=".storage.VideoDiaryContentProvider"
+            android:authorities="video.diary.simple"
+            android:enabled="true"
+            android:exported="false" >
+        </provider>
     </application>
 
 </manifest>

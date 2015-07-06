@@ -100,11 +100,16 @@ public class MediaStoreFacade {
         }
     }
 
+    /**
+     * Creates an implicit intent to play the video.
+     */
     public Intent makePlayVideoIntent(Context context, Uri videoUri)
     {
         Log.i(Constants.TAG, "Making an intent to play video");
 
         Intent playVideo = new Intent(Intent.ACTION_VIEW);
+
+        // TODO: We should be able to automatically determine the MIME type here.
         playVideo.setDataAndType(videoUri, "video/mp4");
 
         return playVideo;

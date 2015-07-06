@@ -22,6 +22,7 @@ public class VideoDetailsOps implements OpsConfig {
 
     private WeakReference<Activity> mActivity;
     private String mFilePath;
+    private long mVideoId;
     private MediaStoreFacade mFacade;
 
     private VideoDetailsActivity getActivity()
@@ -37,8 +38,9 @@ public class VideoDetailsOps implements OpsConfig {
         long videoId = data.getLongExtra("videoId", 0);
 
         Log.i(Constants.TAG, "Video id from intent " + videoId);
+        mVideoId = videoId;
 
-        Video video = mFacade.getVideoById(videoId);
+
         this.mFilePath = mFacade.getVideoFilePath(videoId);
 
         File videoFile = new File(this.mFilePath);
@@ -61,6 +63,12 @@ public class VideoDetailsOps implements OpsConfig {
         } else {
             Toaster.Show(getActivity(), "Sorry, there isn't any app to play back video.");
         }
+    }
+
+    public void uploadVideo()
+    {
+        Video video = mFacade.getVideoById(mVideoId);
+        //VideoStorageHelper.store(getActivity().getApplicationContext(),video.getName(),);
     }
 
     /**
@@ -91,7 +99,18 @@ public class VideoDetailsOps implements OpsConfig {
         Log.i(Constants.TAG, "Size is " + file.length());
 
         ((TextView) getActivity().findViewById(R.id.location)).setText(file.getPath());
-        ((TextView)getActivity().findViewById(R.id.size)).setText(Long.toString(size) + " MB");
+
+        String sizeToShow;
+
+        if (size < 1)
+        {
+            sizeToShow = file.length() + " Bytes";
+        } else
+        {
+            sizeToShow = Long.toString(size) + " MB";
+        }
+
+        ((TextView)getActivity().findViewById(R.id.size)).setText(sizeToShow);
     }
 
     @Override
