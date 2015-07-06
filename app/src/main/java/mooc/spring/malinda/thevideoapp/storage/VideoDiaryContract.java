@@ -40,8 +40,7 @@ public class VideoDiaryContract {
          */
         public static Uri buildUri(Long id)
         {
-            return ContentUris.withAppendedId(CONTENT_URI,
-                    id);
+            return ContentUris.withAppendedId(CONTENT_URI, id);
         }
     }
 }

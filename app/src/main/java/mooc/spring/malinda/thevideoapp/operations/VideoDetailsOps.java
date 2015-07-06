@@ -16,6 +16,7 @@ import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.activities.VideoDetailsActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.framework.OpsConfig;
+import mooc.spring.malinda.thevideoapp.services.VideoUploader;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
 public class VideoDetailsOps implements OpsConfig {
@@ -65,10 +66,13 @@ public class VideoDetailsOps implements OpsConfig {
         }
     }
 
+    /**
+     * Stores and upload the video.
+     */
     public void uploadVideo()
     {
-        Video video = mFacade.getVideoById(mVideoId);
-        //VideoStorageHelper.store(getActivity().getApplicationContext(),video.getName(),);
+       Intent intent = VideoUploader.makeUploadVideo(getActivity(), "title");
+       getActivity().startService(intent);
     }
 
     /**

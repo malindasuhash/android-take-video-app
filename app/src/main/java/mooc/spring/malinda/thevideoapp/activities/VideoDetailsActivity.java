@@ -33,9 +33,12 @@ public class VideoDetailsActivity extends ConfigurationHandledActivity<VideoDeta
         mOps.playVideo();
     }
 
+    /**
+     * Stores locally and uploads the video.
+     */
     public void uploadVideo(View view)
     {
-        mOps.
+        mOps.uploadVideo();
     }
 
     @Override
