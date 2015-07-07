@@ -2,13 +2,16 @@ package mooc.spring.malinda.thevideoapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.ConfigurationHandledActivity;
+import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.VideoOps;
+import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
 
 
 public class MainActivity extends ConfigurationHandledActivity<VideoOps> {

@@ -28,7 +28,7 @@ public class VideoDiaryContract {
                         + PATH_CHARACTER;
 
 
-        public static String TABLE_NAME = "VideoDiary";
+        public final static String TABLE_NAME = "VideoDiary";
         public static String COLUMN_TITLE = "title";
         public static String COLUMN_DURATION = "duration";
         public static String COLUMN_CONTENT_TYPE = "content_type";
