@@ -71,7 +71,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/ratings"
         android:numStars="5"
-        android:rating="2.1" />
+        android:rating="1"
+        android:onClick="ratingChanged" />
 
     <Button
         android:layout_width="match_parent"

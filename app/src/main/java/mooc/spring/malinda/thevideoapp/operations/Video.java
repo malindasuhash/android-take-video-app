@@ -18,6 +18,16 @@ public class Video {
     private long duration;
     private String contentType;
 
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    private float rating;
+
     public Video(String name, long duration, String contentType)
     {
 

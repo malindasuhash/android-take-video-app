@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.io.File;
@@ -22,9 +23,12 @@ import mooc.spring.malinda.thevideoapp.utils.Toaster;
 public class VideoDetailsOps implements OpsConfig {
 
     private WeakReference<Activity> mActivity;
+    private WeakReference<RatingBar> mRatings;
+
     private String mFilePath;
     private long mVideoId;
     private MediaStoreFacade mFacade;
+    private float mCurrentRating;
 
     private VideoDetailsActivity getActivity()
     {
@@ -40,7 +44,6 @@ public class VideoDetailsOps implements OpsConfig {
 
         Log.i(Constants.TAG, "Video id from intent " + videoId);
         mVideoId = videoId;
-
 
         this.mFilePath = mFacade.getVideoFilePath(videoId);
 
@@ -69,10 +72,15 @@ public class VideoDetailsOps implements OpsConfig {
     /**
      * Stores and upload the video.
      */
-    public void uploadVideo()
+    public void storeDetailsAnduploadVideo()
     {
-       Intent intent = VideoUploader.makeUploadVideo(getActivity(), "title");
-       getActivity().startService(intent);
+        Log.i(Constants.TAG, "Creating an intent to upload and store the video.");
+
+        Video video = mFacade.getVideoById(mVideoId);
+        video.setRating(mRatings.get().getRating());
+
+        Intent intent = VideoUploader.makeUploadVideo(getActivity(), video);
+        getActivity().startService(intent);
     }
 
     /**
@@ -117,13 +125,26 @@ public class VideoDetailsOps implements OpsConfig {
         ((TextView)getActivity().findViewById(R.id.size)).setText(sizeToShow);
     }
 
+    /**
+     * Updates the rating in the operations when it is changed in the UI.
+     */
+    public void ratingChanged()
+    {
+        mCurrentRating = mRatings.get().getRating();
+    }
+
     @Override
     public void onConfiguration(Activity activity, boolean firstTimeIn) {
 
         mActivity = new WeakReference<>(activity);
+        mRatings = new WeakReference<>((RatingBar)activity.findViewById(R.id.ratings));
 
         if (firstTimeIn) {
             mFacade = new MediaStoreFacade(getActivity().getApplicationContext());
+            mRatings.get().setRating(0);
+        } else
+        {
+            mRatings.get().setRating(mCurrentRating);
         }
     }
 }
