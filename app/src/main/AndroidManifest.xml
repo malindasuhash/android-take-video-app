@@ -25,7 +25,7 @@
         </activity>
 
         <service
-            android:name=".services.VideoUploader"
+            android:name=".services.VideoUploaderService"
             android:exported="false" >
         </service>
 

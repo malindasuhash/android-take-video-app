@@ -18,6 +18,26 @@ public class Video {
     private long duration;
     private String contentType;
 
+    public long getVideoId() {
+        return videoId;
+    }
+
+    public void setVideoId(long videoId) {
+        this.videoId = videoId;
+    }
+
+    private long videoId;
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    private String path;
+
     public float getRating() {
         return rating;
     }

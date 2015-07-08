@@ -8,9 +8,9 @@ import android.util.Log;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
 
-public class VideoStorageHelper {
+public class VideoStorageHandler {
 
-    public static void store(Context context, String title, String dataUrl, float rating, long duration)
+    public void store(Context context, String title, String dataUrl, float rating, long duration)
     {
         ContentValues values = new ContentValues();
 

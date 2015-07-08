@@ -7,13 +7,16 @@ import android.util.Log;
 
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.Video;
-import mooc.spring.malinda.thevideoapp.operations.VideoStorageHelper;
+import mooc.spring.malinda.thevideoapp.operations.VideoStorageHandler;
 import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
 
-public class VideoUploader extends IntentService {
+public class VideoUploaderService extends IntentService {
 
-    public VideoUploader() {
+    private VideoStorageHandler mStoreHandler;
+
+    public VideoUploaderService() {
         super("VideoUploader");
+        mStoreHandler = new VideoStorageHandler();
     }
 
     /**
@@ -23,7 +26,7 @@ public class VideoUploader extends IntentService {
     {
         Log.i(Constants.TAG, "Creating the store and upload intent.");
 
-        Intent storeAndUpload = new Intent(context, VideoUploader.class);
+        Intent storeAndUpload = new Intent(context, VideoUploaderService.class);
         storeAndUpload.putExtra(VideoDiaryContract.VideoEntry.COLUMN_TITLE, video.getName());
         storeAndUpload.putExtra(VideoDiaryContract.VideoEntry.COLUMN_CONTENT_TYPE, video.getContentType());
         storeAndUpload.putExtra(VideoDiaryContract.VideoEntry.COLUMN_DATA_URL, "from server");
@@ -37,7 +40,19 @@ public class VideoUploader extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             Log.i(Constants.TAG, "Received call in the service.");
-            VideoStorageHelper.store(getApplicationContext(), "title", "data", 2.3f, 101);
+            String title = intent.getStringExtra(VideoDiaryContract.VideoEntry.COLUMN_TITLE);
+            long duration = intent.getLongExtra(VideoDiaryContract.VideoEntry.COLUMN_DURATION, 0);
+            float ratings = intent.getFloatExtra(VideoDiaryContract.VideoEntry.COLUMN_STAR_RATING, 0);
+            mStoreHandler.store(getApplicationContext(), title, "data", ratings, duration);
         }
+    }
+
+    /**
+     * Uploads the video to the server.
+     * @param pathToFile
+     */
+    private void uploadTheVideo(String pathToFile, long videoId)
+    {
+
     }
 }
