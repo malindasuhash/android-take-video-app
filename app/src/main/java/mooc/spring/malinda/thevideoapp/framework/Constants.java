@@ -7,4 +7,6 @@ public class Constants {
     public static final String VideoOperations = "Ops";
 
     public static final long MEGA_BYTE = 1024 * 1024;
+
+    public static final String Server_Url = "http://10.0.2.2:8080";
 }
