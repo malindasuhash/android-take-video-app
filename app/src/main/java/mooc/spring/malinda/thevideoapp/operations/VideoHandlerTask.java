@@ -1,15 +1,18 @@
 package mooc.spring.malinda.thevideoapp.operations;
 
+import android.os.AsyncTask;
+
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.retrofit.VideoMetaDto;
 import mooc.spring.malinda.thevideoapp.retrofit.VideoSvc;
+import mooc.spring.malinda.thevideoapp.services.TaskData;
 import retrofit.RestAdapter;
 
-public class VideoHandler {
+public class VideoHandlerTask extends AsyncTask<TaskData, Void, VideoMetaDto> {
 
     private VideoSvc mService;
 
-    public VideoHandler()
+    public VideoHandlerTask()
     {
         mService = new RestAdapter.Builder()
                 .setEndpoint(Constants.Server_Url)
@@ -21,8 +24,10 @@ public class VideoHandler {
     /**
      * Uploads the video to the server.
      */
-    public VideoMetaDto uploadTheVideo(Video video)
-    {
-        return mService.addVideo(video);
+    @Override
+    protected VideoMetaDto doInBackground(TaskData... data) {
+        Video v = data[0].getVideo();
+        VideoMetaDto metaDto = mService.addVideo(v);
+        return metaDto;
     }
 }

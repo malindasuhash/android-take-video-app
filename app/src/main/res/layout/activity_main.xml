@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:text="@string/sync_with_server"
             android:id="@+id/button2"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:nestedScrollingEnabled="false" />
 
     </LinearLayout>
 

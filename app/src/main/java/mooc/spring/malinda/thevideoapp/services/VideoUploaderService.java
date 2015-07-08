@@ -7,20 +7,17 @@ import android.util.Log;
 
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.Video;
-import mooc.spring.malinda.thevideoapp.operations.VideoHandler;
+import mooc.spring.malinda.thevideoapp.operations.VideoHandlerTask;
 import mooc.spring.malinda.thevideoapp.operations.VideoStorageHandler;
-import mooc.spring.malinda.thevideoapp.retrofit.VideoMetaDto;
 import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
+import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
 public class VideoUploaderService extends IntentService {
 
-    private VideoStorageHandler mStoreHandler;
-    private VideoHandler mVideoHandler;
+    private VideoStorageHandler mStorage = new VideoStorageHandler();
 
     public VideoUploaderService() {
         super("VideoUploader");
-        mStoreHandler = new VideoStorageHandler();
-        mVideoHandler = new VideoHandler();
     }
 
     /**
@@ -49,13 +46,17 @@ public class VideoUploaderService extends IntentService {
             float ratings = intent.getFloatExtra(VideoDiaryContract.VideoEntry.COLUMN_STAR_RATING, 0);
 
             Video video = new Video(title, duration, "video/mp4");
+            video.setRating(ratings);
 
             // Uploads meta data to the server and obtains the data uri.
-            VideoMetaDto metaDto = mVideoHandler.uploadTheVideo(video);
+            TaskData data = new TaskData();
+            data.setVideo(video);
+            data.setContext(getApplicationContext());
 
-            mStoreHandler.store(getApplicationContext(), title, metaDto.getDataUrl(), ratings, duration);
+            VideoHandlerTask task = new VideoHandlerTask();
+            task.execute(data);
 
-            // TODO: Upload the video content.
+            Toaster.Show(this, "Saved locally and with meta data from server.");
         }
     }
 }
