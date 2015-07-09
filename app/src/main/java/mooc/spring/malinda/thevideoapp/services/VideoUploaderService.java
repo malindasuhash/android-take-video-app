@@ -3,6 +3,7 @@ package mooc.spring.malinda.thevideoapp.services;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.os.IBinder;
 import android.util.Log;
 
 import mooc.spring.malinda.thevideoapp.framework.Constants;
@@ -16,8 +17,8 @@ public class VideoUploaderService extends IntentService {
 
     private VideoStorageHandler mStorage = new VideoStorageHandler();
 
-    public VideoUploaderService() {
-        super("VideoUploader");
+    public VideoUploaderService(String name) {
+        super(name);
     }
 
     /**
@@ -37,7 +38,6 @@ public class VideoUploaderService extends IntentService {
         return storeAndUpload;
     }
 
-    @Override
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             Log.i(Constants.TAG, "Received call in the service.");
