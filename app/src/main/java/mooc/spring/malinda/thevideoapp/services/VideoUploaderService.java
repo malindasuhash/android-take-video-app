@@ -18,8 +18,8 @@ public class VideoUploaderService extends IntentService {
     private VideoHandler mVideoHandler = new VideoHandler();
     private VideoStorageHandler mStorage = new VideoStorageHandler();
 
-    public VideoUploaderService(String name) {
-        super(name);
+    public VideoUploaderService() {
+        super("VideoUploaderService");
     }
 
     /**
