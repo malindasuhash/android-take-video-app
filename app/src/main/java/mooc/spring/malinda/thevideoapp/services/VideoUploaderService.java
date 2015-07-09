@@ -3,18 +3,19 @@ package mooc.spring.malinda.thevideoapp.services;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import android.os.IBinder;
 import android.util.Log;
 
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.Video;
-import mooc.spring.malinda.thevideoapp.operations.VideoHandlerTask;
+import mooc.spring.malinda.thevideoapp.operations.VideoHandler;
 import mooc.spring.malinda.thevideoapp.operations.VideoStorageHandler;
+import mooc.spring.malinda.thevideoapp.retrofit.VideoMetaDto;
 import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
 public class VideoUploaderService extends IntentService {
 
+    private VideoHandler mVideoHandler = new VideoHandler();
     private VideoStorageHandler mStorage = new VideoStorageHandler();
 
     public VideoUploaderService(String name) {
@@ -49,12 +50,10 @@ public class VideoUploaderService extends IntentService {
             video.setRating(ratings);
 
             // Uploads meta data to the server and obtains the data uri.
-            TaskData data = new TaskData();
-            data.setVideo(video);
-            data.setContext(getApplicationContext());
+            VideoMetaDto metaDto = mVideoHandler.uploadMetaData(video);
+            Log.i(Constants.TAG, "Meta data uploaded, saving the state now");
 
-            VideoHandlerTask task = new VideoHandlerTask();
-            task.execute(data);
+            mStorage.store(this, video.getName(), metaDto.getDataUrl(), video.getRating(), video.getDuration());
 
             Toaster.Show(this, "Saved locally and with meta data from server.");
         }
