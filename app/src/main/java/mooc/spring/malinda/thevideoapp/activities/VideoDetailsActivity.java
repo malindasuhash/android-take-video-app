@@ -39,6 +39,7 @@ public class VideoDetailsActivity extends ConfigurationHandledActivity<VideoDeta
     public void uploadVideo(View view)
     {
         mOps.storeDetailsAnduploadVideo();
+        finish();
     }
 
     public void ratingChanged(View view)
