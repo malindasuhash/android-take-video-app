@@ -88,7 +88,7 @@ public class VideoDetailsOps implements OpsConfig {
         StartProcessingTask task = new StartProcessingTask();
         task.execute(data);
 
-
+        Toaster.Show(getActivity().getApplicationContext(), "Uploading..");
     }
 
     /**

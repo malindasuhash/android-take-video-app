@@ -16,9 +16,6 @@ import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
 public class VideoUploaderService extends IntentService {
 
-    private VideoHandler mVideoHandler = new VideoHandler();
-    private VideoStorageHandler mStorage = new VideoStorageHandler();
-
     public VideoUploaderService() {
         super("VideoUploaderService");
     }
@@ -36,13 +33,16 @@ public class VideoUploaderService extends IntentService {
         storeAndUpload.putExtra(VideoDiaryContract.VideoEntry.COLUMN_DATA_URL, "from server");
         storeAndUpload.putExtra(VideoDiaryContract.VideoEntry.COLUMN_DURATION, video.getDuration());
         storeAndUpload.putExtra(VideoDiaryContract.VideoEntry.COLUMN_STAR_RATING, video.getRating());
-        storeAndUpload.putExtra(Constants.VideoPath, video.getRating());
+        storeAndUpload.putExtra(Constants.VideoPath, video.getPath());
 
         return storeAndUpload;
     }
 
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
+            VideoHandler mVideoHandler = new VideoHandler();
+            VideoStorageHandler mStorage = new VideoStorageHandler();
+
             Log.i(Constants.TAG, "Received call in the service.");
             String title = intent.getStringExtra(VideoDiaryContract.VideoEntry.COLUMN_TITLE);
             long duration = intent.getLongExtra(VideoDiaryContract.VideoEntry.COLUMN_DURATION, 0);
@@ -57,18 +57,21 @@ public class VideoUploaderService extends IntentService {
             VideoMetaDto metaDto = mVideoHandler.uploadMetaData(video);
             Log.i(Constants.TAG, "Meta data uploaded, saving the state now");
 
+            // Setting the video id so that it match the server.
+            video.setVideoId(metaDto.getVideoId());
+
             // Upload video.
             VideoStatus status = mVideoHandler.uploadVideoContent(video);
 
             if (status.getState() != VideoStatus.VideoState.READY)
             {
-                Toaster.Show(this, "Sorry, there was a problem uploading the video to server.");
+                Toaster.Show(this.getApplicationContext(), "Sorry, there was a problem uploading the video to server.");
                 return;
             }
 
-            mStorage.store(this, video.getName(), metaDto.getDataUrl(), video.getRating(), video.getDuration());
+            mStorage.store(this.getApplicationContext(), video.getName(), metaDto.getDataUrl(), video.getRating(), video.getDuration());
 
-            Toaster.Show(this, "Saved Uploaded to the server.");
+            Toaster.Show(this.getApplicationContext(), "Saved Uploaded to the server.");
         }
     }
 }
