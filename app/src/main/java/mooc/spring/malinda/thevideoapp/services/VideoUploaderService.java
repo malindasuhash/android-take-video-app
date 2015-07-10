@@ -10,6 +10,7 @@ import mooc.spring.malinda.thevideoapp.operations.Video;
 import mooc.spring.malinda.thevideoapp.operations.VideoHandler;
 import mooc.spring.malinda.thevideoapp.operations.VideoStorageHandler;
 import mooc.spring.malinda.thevideoapp.retrofit.VideoMetaDto;
+import mooc.spring.malinda.thevideoapp.retrofit.VideoStatus;
 import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
@@ -35,6 +36,7 @@ public class VideoUploaderService extends IntentService {
         storeAndUpload.putExtra(VideoDiaryContract.VideoEntry.COLUMN_DATA_URL, "from server");
         storeAndUpload.putExtra(VideoDiaryContract.VideoEntry.COLUMN_DURATION, video.getDuration());
         storeAndUpload.putExtra(VideoDiaryContract.VideoEntry.COLUMN_STAR_RATING, video.getRating());
+        storeAndUpload.putExtra(Constants.VideoPath, video.getRating());
 
         return storeAndUpload;
     }
@@ -45,17 +47,28 @@ public class VideoUploaderService extends IntentService {
             String title = intent.getStringExtra(VideoDiaryContract.VideoEntry.COLUMN_TITLE);
             long duration = intent.getLongExtra(VideoDiaryContract.VideoEntry.COLUMN_DURATION, 0);
             float ratings = intent.getFloatExtra(VideoDiaryContract.VideoEntry.COLUMN_STAR_RATING, 0);
+            String videoPath = intent.getStringExtra(Constants.VideoPath);
 
             Video video = new Video(title, duration, "video/mp4");
             video.setRating(ratings);
+            video.setPath(videoPath);
 
             // Uploads meta data to the server and obtains the data uri.
             VideoMetaDto metaDto = mVideoHandler.uploadMetaData(video);
             Log.i(Constants.TAG, "Meta data uploaded, saving the state now");
 
+            // Upload video.
+            VideoStatus status = mVideoHandler.uploadVideoContent(video);
+
+            if (status.getState() != VideoStatus.VideoState.READY)
+            {
+                Toaster.Show(this, "Sorry, there was a problem uploading the video to server.");
+                return;
+            }
+
             mStorage.store(this, video.getName(), metaDto.getDataUrl(), video.getRating(), video.getDuration());
 
-            Toaster.Show(this, "Saved locally and with meta data from server.");
+            Toaster.Show(this, "Saved Uploaded to the server.");
         }
     }
 }

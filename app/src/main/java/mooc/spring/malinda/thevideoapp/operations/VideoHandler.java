@@ -1,9 +1,13 @@
 package mooc.spring.malinda.thevideoapp.operations;
 
+import java.io.File;
+
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.retrofit.VideoMetaDto;
+import mooc.spring.malinda.thevideoapp.retrofit.VideoStatus;
 import mooc.spring.malinda.thevideoapp.retrofit.VideoSvc;
 import retrofit.RestAdapter;
+import retrofit.mime.TypedFile;
 
 public class VideoHandler {
 
@@ -19,10 +23,20 @@ public class VideoHandler {
     }
 
     /**
-     * Uploads the video to the server.
+     * Uploads the video meta to the server.
      */
     public VideoMetaDto uploadMetaData(Video video) {
         VideoMetaDto metaDto = mService.addVideo(video);
         return metaDto;
+    }
+
+    /**
+     * Uploads the video content to the server.
+     */
+    public VideoStatus uploadVideoContent(Video video)
+    {
+        File videoFile = new File(video.getPath());
+        VideoStatus status = mService.storeVideo(video.getVideoId(), new TypedFile(video.getContentType(), videoFile));
+        return status;
     }
 }
