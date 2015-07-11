@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.ConfigurationHandledActivity;
@@ -40,6 +41,14 @@ public class EditVideoDetailsActivity extends ConfigurationHandledActivity<Video
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Plays the selected video.
+     */
+    public void playVideo(View view)
+    {
+        this.mOps.playVideo();
     }
 
     /**
