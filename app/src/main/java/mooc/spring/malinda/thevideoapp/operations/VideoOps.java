@@ -6,9 +6,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.ListView;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
+import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.activities.MainActivity;
 import mooc.spring.malinda.thevideoapp.activities.VideoDetailsActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
@@ -20,6 +24,8 @@ public class VideoOps implements OpsConfig {
     private static final int REQUEST_VIDEO_CAPTURE = 1;
 
     private WeakReference<Activity> mActivity;
+    private WeakReference<ListView> mVideoList;
+    private VideoAdapter mAdapter;
 
     /**
      * Uses the build in video application to take the video.
@@ -60,11 +66,16 @@ public class VideoOps implements OpsConfig {
         // Create a WeakReference to the activity.
 
         mActivity = new WeakReference<>(activity);
+        mVideoList = new WeakReference<>((ListView)getActivity().findViewById(R.id.listView));
 
         if (firstTimeIn) {
-            // Initialize the Google account information.
+            mAdapter = new VideoAdapter(getActivity().getApplicationContext());
 
         }
+
+        mVideoList.get().setAdapter(mAdapter);
+        getVideoList();
+        mAdapter.notifyDataSetChanged();
     }
 
     private void showVideoDetails(long id)
@@ -74,6 +85,18 @@ public class VideoOps implements OpsConfig {
         Intent showDetails = new Intent(getActivity(), VideoDetailsActivity.class);
         showDetails = showDetails.putExtra("videoId", id);
         getActivity().startActivity(showDetails);
+    }
+
+    private void getVideoList()
+    {
+        List<Video> videos = new ArrayList<>();
+        Video v = new Video("name", 1234l, "mp4");
+        v.setRating(3.2f);
+        videos.add(v);
+
+        mAdapter.setVideos(videos);
+
+        Log.i(Constants.TAG, "Done");
     }
 
     private MainActivity getActivity()
