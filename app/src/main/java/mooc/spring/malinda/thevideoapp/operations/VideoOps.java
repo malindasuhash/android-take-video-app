@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ListView;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 
 import mooc.spring.malinda.thevideoapp.R;
@@ -17,9 +17,10 @@ import mooc.spring.malinda.thevideoapp.activities.MainActivity;
 import mooc.spring.malinda.thevideoapp.activities.VideoDetailsActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.framework.OpsConfig;
+import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
-public class VideoOps implements OpsConfig {
+public class VideoOps extends AsyncTask<Void, Void, List<Video>> implements OpsConfig {
 
     private static final int REQUEST_VIDEO_CAPTURE = 1;
 
@@ -70,12 +71,10 @@ public class VideoOps implements OpsConfig {
 
         if (firstTimeIn) {
             mAdapter = new VideoAdapter(getActivity().getApplicationContext());
-
+            mVideoList.get().setAdapter(mAdapter);
         }
 
-        mVideoList.get().setAdapter(mAdapter);
         getVideoList();
-        mAdapter.notifyDataSetChanged();
     }
 
     private void showVideoDetails(long id)
@@ -89,18 +88,24 @@ public class VideoOps implements OpsConfig {
 
     private void getVideoList()
     {
-        List<Video> videos = new ArrayList<>();
-        Video v = new Video("name", 1234l, "mp4");
-        v.setRating(3.2f);
-        videos.add(v);
-
-        mAdapter.setVideos(videos);
-
-        Log.i(Constants.TAG, "Done");
+        this.execute();
+        Log.i(Constants.TAG, "Loading videos, through the task.");
     }
 
     private MainActivity getActivity()
     {
         return (MainActivity)mActivity.get();
+    }
+
+    @Override
+    protected List<Video> doInBackground(Void... voids) {
+        MediaStoreFacade facade = new MediaStoreFacade(getActivity().getApplicationContext());
+        return facade.getVideos(VideoDiaryContract.VideoEntry.CONTENT_URI);
+    }
+
+    @Override
+    protected void onPostExecute(List<Video> videos) {
+        super.onPostExecute(videos);
+        mAdapter.setVideos(videos);
     }
 }

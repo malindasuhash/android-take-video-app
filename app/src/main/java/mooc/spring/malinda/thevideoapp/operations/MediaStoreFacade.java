@@ -8,7 +8,11 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import mooc.spring.malinda.thevideoapp.framework.Constants;
+import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
 
 public class MediaStoreFacade {
 
@@ -40,6 +44,42 @@ public class MediaStoreFacade {
                 // Get the Video metadata from Android Video Content
                 // Provider
                 return getVideo(cursor);
+            else
+                // Return null if there id no row returned by the
+                // Query.
+                return null;
+        }
+    }
+
+    /**
+     * Returns a collection of videos from content provider.
+     */
+    public List<Video> getVideos(Uri videos)
+    {
+        List<Video> all = new ArrayList<>();
+
+        try (Cursor cursor =
+                     context.getContentResolver().query(videos,
+                             null,
+                             null,
+                             null,
+                             null)) {
+            // Check if there is any row returned by the query.
+            if (cursor.moveToFirst())
+                // Get the Video metadata from Android Video Content
+                // Provider
+            {
+                while (!cursor.isAfterLast())
+                {
+                    String name = cursor.getString(cursor.getColumnIndex(VideoDiaryContract.VideoEntry.COLUMN_TITLE));
+                    String rating = cursor.getString(cursor.getColumnIndex(VideoDiaryContract.VideoEntry.COLUMN_STAR_RATING));
+                    Video video = new Video(name, 0, "video/mp4");
+                    video.setRating(2.2f);
+                    all.add(video);
+                }
+
+                return all;
+            }
             else
                 // Return null if there id no row returned by the
                 // Query.
