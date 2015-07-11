@@ -71,10 +71,11 @@ public class VideoOps extends AsyncTask<Void, Void, List<Video>> implements OpsC
 
         if (firstTimeIn) {
             mAdapter = new VideoAdapter(getActivity().getApplicationContext());
-            mVideoList.get().setAdapter(mAdapter);
+            getVideoList();
         }
 
-        getVideoList();
+        mVideoList.get().setAdapter(mAdapter);
+
     }
 
     private void showVideoDetails(long id)
