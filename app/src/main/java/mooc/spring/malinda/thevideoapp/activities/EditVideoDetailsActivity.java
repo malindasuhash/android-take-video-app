@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.ConfigurationHandledActivity;
+import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.VideoEdit;
 
 public class EditVideoDetailsActivity extends ConfigurationHandledActivity<VideoEdit> {
@@ -44,10 +45,10 @@ public class EditVideoDetailsActivity extends ConfigurationHandledActivity<Video
     /**
      * Creates the intent to view the details of the video.
      */
-    public static Intent makeIntentToEditVideo(Context context, int videoIndex)
+    public static Intent makeIntentToEditVideo(Context context, float videoId)
     {
         Intent intent = new Intent(context, EditVideoDetailsActivity.class);
-        intent.putExtra("index", videoIndex);
+        intent.putExtra(Constants.VideoId, videoId);
 
         return intent;
     }

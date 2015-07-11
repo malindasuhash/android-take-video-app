@@ -70,10 +70,10 @@ public class VideoOps extends AsyncTask<Void, Void, List<Video>> implements OpsC
      */
     public void showDetailsForViewIndex(int i, View view)
     {
-        String videoId = ((TextView) view.findViewById(R.id.vidref)).getText().toString();
+        float videoId = Float.parseFloat(((TextView) view.findViewById(R.id.vidref)).getText().toString());
 
         Log.i(Constants.TAG, "Request for details for index " + i + " videoId " + videoId);
-        Intent intent = EditVideoDetailsActivity.makeIntentToEditVideo(getActivity().getApplicationContext(), i);
+        Intent intent = EditVideoDetailsActivity.makeIntentToEditVideo(getActivity().getApplicationContext(), videoId);
         getActivity().startActivity(intent);
     }
 
