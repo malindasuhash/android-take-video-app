@@ -62,6 +62,14 @@ public class VideoOps extends AsyncTask<Void, Void, List<Video>> implements OpsC
         }
     }
 
+    /**
+     * Get details for the the video.
+     */
+    public void showDetailsForViewIndex(int i)
+    {
+        Log.i(Constants.TAG, "Request for details for index " + i);
+    }
+
     public void onConfiguration(Activity activity,
                                 boolean firstTimeIn) {
         // Create a WeakReference to the activity.

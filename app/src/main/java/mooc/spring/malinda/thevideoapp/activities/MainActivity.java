@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.ConfigurationHandledActivity;
@@ -17,6 +19,7 @@ public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setListViewClick();
         super.handleConfiguration(VideoOps.class);
     }
 
@@ -42,6 +45,16 @@ public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
         return super.onOptionsItemSelected(item);
     }
 
+    public void setListViewClick()
+    {
+        ListView listView = (ListView)findViewById(R.id.listView);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                mOps.showDetailsForViewIndex(i);
+            }
+        });
+    }
     /**
      * Invokes the intent to open the build in camera to take the video.
      */
