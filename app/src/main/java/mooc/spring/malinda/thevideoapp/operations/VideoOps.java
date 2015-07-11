@@ -7,12 +7,15 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
 import mooc.spring.malinda.thevideoapp.R;
+import mooc.spring.malinda.thevideoapp.activities.EditVideoDetailsActivity;
 import mooc.spring.malinda.thevideoapp.activities.MainActivity;
 import mooc.spring.malinda.thevideoapp.activities.VideoDetailsActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
@@ -65,9 +68,13 @@ public class VideoOps extends AsyncTask<Void, Void, List<Video>> implements OpsC
     /**
      * Get details for the the video.
      */
-    public void showDetailsForViewIndex(int i)
+    public void showDetailsForViewIndex(int i, View view)
     {
-        Log.i(Constants.TAG, "Request for details for index " + i);
+        String videoId = ((TextView) view.findViewById(R.id.vidref)).getText().toString();
+
+        Log.i(Constants.TAG, "Request for details for index " + i + " videoId " + videoId);
+        Intent intent = EditVideoDetailsActivity.makeIntentToEditVideo(getActivity().getApplicationContext(), i);
+        getActivity().startActivity(intent);
     }
 
     public void onConfiguration(Activity activity,

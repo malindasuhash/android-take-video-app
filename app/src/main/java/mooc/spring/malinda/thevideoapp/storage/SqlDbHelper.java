@@ -11,7 +11,7 @@ import java.io.File;
  */
 public class SqlDbHelper extends SQLiteOpenHelper {
 
-    private static final int DATABSE_VERSION = 1;
+    private static final int DATABSE_VERSION = 5;
 
     private static final String DATABASE_NAME = "video.diary";
 
@@ -29,7 +29,9 @@ public class SqlDbHelper extends SQLiteOpenHelper {
                 + VideoDiaryContract.VideoEntry.COLUMN_DURATION + " TEXT, "
                 + VideoDiaryContract.VideoEntry.COLUMN_CONTENT_TYPE + " TEXT, "
                 + VideoDiaryContract.VideoEntry.COLUMN_DATA_URL + " TEXT, "
-                + VideoDiaryContract.VideoEntry.COLUMN_STAR_RATING + " REAL "
+                + VideoDiaryContract.VideoEntry.COLUMN_STAR_RATING + " REAL, "
+                + VideoDiaryContract.VideoEntry.COLUMN_VIDEO_ID + " INTEGER, "
+                + VideoDiaryContract.VideoEntry.COLUMN_LOCAL_VIDEO_ID + " INTEGER "
                 + " )";
 
             sqLiteDatabase.execSQL(query);
@@ -38,5 +40,6 @@ public class SqlDbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         sqLiteDatabase.execSQL("DROP TABLE " + VideoDiaryContract.VideoEntry.TABLE_NAME);
+        onCreate(sqLiteDatabase);
     }
 }

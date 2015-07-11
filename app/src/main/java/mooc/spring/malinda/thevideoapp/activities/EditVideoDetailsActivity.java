@@ -1,18 +1,22 @@
 package mooc.spring.malinda.thevideoapp.activities;
 
-import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import mooc.spring.malinda.thevideoapp.R;
+import mooc.spring.malinda.thevideoapp.framework.ConfigurationHandledActivity;
+import mooc.spring.malinda.thevideoapp.operations.VideoEdit;
 
-public class EditVideoDetailsActivity extends Activity {
+public class EditVideoDetailsActivity extends ConfigurationHandledActivity<VideoEdit> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_video_details);
+        super.handleConfiguration(VideoEdit.class);
     }
 
     @Override
@@ -35,5 +39,16 @@ public class EditVideoDetailsActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Creates the intent to view the details of the video.
+     */
+    public static Intent makeIntentToEditVideo(Context context, int videoIndex)
+    {
+        Intent intent = new Intent(context, EditVideoDetailsActivity.class);
+        intent.putExtra("index", videoIndex);
+
+        return intent;
     }
 }

@@ -34,6 +34,8 @@ public class VideoDiaryContract {
         public static String COLUMN_CONTENT_TYPE = "content_type";
         public static String COLUMN_DATA_URL = "data_url";
         public static String COLUMN_STAR_RATING = "star_rating";
+        public static String COLUMN_VIDEO_ID = "video_id";
+        public static String COLUMN_LOCAL_VIDEO_ID = "video_id_local";
 
         /**
          * Provides the uri of the active/change record(s).

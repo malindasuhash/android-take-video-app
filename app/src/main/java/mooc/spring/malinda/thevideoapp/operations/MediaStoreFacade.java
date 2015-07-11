@@ -73,8 +73,10 @@ public class MediaStoreFacade {
                 {
                    String name = cursor.getString(cursor.getColumnIndex(VideoDiaryContract.VideoEntry.COLUMN_TITLE));
                    String rating = cursor.getString(cursor.getColumnIndex(VideoDiaryContract.VideoEntry.COLUMN_STAR_RATING));
+                   String videoId = cursor.getString(cursor.getColumnIndex(VideoDiaryContract.VideoEntry.COLUMN_LOCAL_VIDEO_ID));
                    Video video = new Video(name, 0, "video/mp4");
                    video.setRating(Float.parseFloat(rating));
+                   video.setVideoId(Long.parseLong(videoId));
                    all.add(video);
                    Log.i(Constants.TAG, "Reading data");
                    cursor.moveToNext();

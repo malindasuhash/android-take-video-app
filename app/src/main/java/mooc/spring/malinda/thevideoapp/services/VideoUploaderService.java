@@ -33,6 +33,7 @@ public class VideoUploaderService extends IntentService {
         storeAndUpload.putExtra(VideoDiaryContract.VideoEntry.COLUMN_DATA_URL, "from server");
         storeAndUpload.putExtra(VideoDiaryContract.VideoEntry.COLUMN_DURATION, video.getDuration());
         storeAndUpload.putExtra(VideoDiaryContract.VideoEntry.COLUMN_STAR_RATING, video.getRating());
+        storeAndUpload.putExtra(VideoDiaryContract.VideoEntry.COLUMN_LOCAL_VIDEO_ID, video.getVideoId());
         storeAndUpload.putExtra(Constants.VideoPath, video.getPath());
 
         return storeAndUpload;
@@ -47,7 +48,10 @@ public class VideoUploaderService extends IntentService {
             String title = intent.getStringExtra(VideoDiaryContract.VideoEntry.COLUMN_TITLE);
             long duration = intent.getLongExtra(VideoDiaryContract.VideoEntry.COLUMN_DURATION, 0);
             float ratings = intent.getFloatExtra(VideoDiaryContract.VideoEntry.COLUMN_STAR_RATING, 0);
+            long localVideoId = intent.getLongExtra(VideoDiaryContract.VideoEntry.COLUMN_LOCAL_VIDEO_ID, 0);
             String videoPath = intent.getStringExtra(Constants.VideoPath);
+
+            Log.i(Constants.TAG, "Video id in callback " + localVideoId);
 
             Video video = new Video(title, duration, "video/mp4");
             video.setRating(ratings);
@@ -69,7 +73,9 @@ public class VideoUploaderService extends IntentService {
                 return;
             }
 
-            mStorage.store(this.getApplicationContext(), video.getName(), metaDto.getDataUrl(), video.getRating(), video.getDuration());
+            mStorage.store(this.getApplicationContext(), video.getName(),
+                    metaDto.getDataUrl(), video.getRating(), video.getDuration(),
+                    video.getVideoId(), Long.toString(localVideoId));
 
             Toaster.Show(this.getApplicationContext(), "Saved Uploaded to the server.");
         }

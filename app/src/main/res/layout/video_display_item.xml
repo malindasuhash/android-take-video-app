@@ -25,4 +25,11 @@
         android:id="@+id/ratings"
         android:paddingLeft="10dp"
         android:textColor="#ffff000c" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/vidref"
+        android:visibility="invisible" />
 </LinearLayout>

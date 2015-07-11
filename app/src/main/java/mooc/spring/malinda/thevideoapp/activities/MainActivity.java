@@ -51,7 +51,7 @@ public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mOps.showDetailsForViewIndex(i);
+                mOps.showDetailsForViewIndex(i, view);
             }
         });
     }

@@ -16,7 +16,7 @@ public class VideoAdapter extends BaseAdapter {
 
     private final Context mContext;
 
-    private List<Video> videoList = new ArrayList<>();
+    private static List<Video> videoList = new ArrayList<>();
 
     public VideoAdapter(Context context) {
         super();
@@ -40,6 +40,9 @@ public class VideoAdapter extends BaseAdapter {
 
         TextView ratings = (TextView) convertView.findViewById(R.id.ratings);
         ratings.setText(Float.toString(video.getRating()));
+
+        TextView ref = (TextView) convertView.findViewById(R.id.vidref);
+        ref.setText(Float.toString(video.getVideoId()));
 
         return convertView;
     }
@@ -79,6 +82,10 @@ public class VideoAdapter extends BaseAdapter {
      * Get the no of videos in adapter.
      */
     public int getCount() {
+        if (videoList == null)
+        {
+            return 0;
+        }
         return videoList.size();
     }
 
