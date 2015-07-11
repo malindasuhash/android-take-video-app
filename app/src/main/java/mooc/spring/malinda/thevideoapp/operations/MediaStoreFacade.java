@@ -71,11 +71,13 @@ public class MediaStoreFacade {
             {
                 while (!cursor.isAfterLast())
                 {
-                    String name = cursor.getString(cursor.getColumnIndex(VideoDiaryContract.VideoEntry.COLUMN_TITLE));
-                    String rating = cursor.getString(cursor.getColumnIndex(VideoDiaryContract.VideoEntry.COLUMN_STAR_RATING));
-                    Video video = new Video(name, 0, "video/mp4");
-                    video.setRating(2.2f);
-                    all.add(video);
+                   String name = cursor.getString(cursor.getColumnIndex(VideoDiaryContract.VideoEntry.COLUMN_TITLE));
+                   String rating = cursor.getString(cursor.getColumnIndex(VideoDiaryContract.VideoEntry.COLUMN_STAR_RATING));
+                   Video video = new Video(name, 0, "video/mp4");
+                   video.setRating(Float.parseFloat(rating));
+                   all.add(video);
+                   Log.i(Constants.TAG, "Reading data");
+                   cursor.moveToNext();
                 }
 
                 return all;

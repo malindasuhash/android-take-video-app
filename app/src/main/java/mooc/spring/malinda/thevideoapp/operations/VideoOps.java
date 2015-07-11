@@ -106,6 +106,7 @@ public class VideoOps extends AsyncTask<Void, Void, List<Video>> implements OpsC
     @Override
     protected void onPostExecute(List<Video> videos) {
         super.onPostExecute(videos);
+        Log.i(Constants.TAG, "Setting video data in post execute");
         mAdapter.setVideos(videos);
     }
 }
