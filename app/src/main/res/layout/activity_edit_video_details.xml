@@ -50,4 +50,13 @@
         android:id="@+id/uploadVideo"
         android:onClick="uploadVideo" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/remove_video"
+        android:id="@+id/button3"
+        android:layout_gravity="center_horizontal"
+        android:onClick="deleteVideo" />
+
 </LinearLayout>

@@ -52,6 +52,14 @@ public class EditVideoDetailsActivity extends ConfigurationHandledActivity<Video
     }
 
     /**
+     * Removes the given video.
+     */
+    public void deleteVideo(View view)
+    {
+        this.mOps.deleteVideo();
+    }
+
+    /**
      * Creates the intent to view the details of the video.
      */
     public static Intent makeIntentToEditVideo(Context context, float videoId)

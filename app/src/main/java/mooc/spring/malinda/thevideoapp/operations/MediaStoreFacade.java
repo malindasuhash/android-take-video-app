@@ -91,6 +91,16 @@ public class MediaStoreFacade {
         }
     }
 
+    public boolean deleteVideoFromStore(Context context, long videoId)
+    {
+        Uri uri = ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, videoId);
+        int deleted = context.getContentResolver().delete(uri, null, null);
+
+        Log.i(Constants.TAG, "Attempting to delete a stored video, returned value " + deleted);
+
+        return deleted > 0;
+    }
+
     private Video getVideo(Cursor cursor) throws IllegalArgumentException {
         // Get the Name of the Video, which is "videoName.mp4"
         String name =

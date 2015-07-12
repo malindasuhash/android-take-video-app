@@ -44,6 +44,21 @@ public class VideoEdit implements OpsConfig {
         }
     }
 
+    /**
+     * Removed the video from store.
+     */
+    public void deleteVideo()
+    {
+        boolean result = mMediaStoreFacade.deleteVideoFromStore(mActivity.get().getApplicationContext(), mVideoId);
+
+        if (result)
+        {
+            Toaster.Show(mActivity.get(), "Video marked for deletion locally.");
+        } else {
+            Toaster.Show(mActivity.get(), "Sorry, there was a problem deleting video.");
+        }
+    }
+
     public void playVideo()
     {
         Intent intent = mMediaStoreFacade.makePlayVideoIntent(mActivity.get(), Uri.parse(mFilePath));
