@@ -60,9 +60,12 @@ public class VideoEdit implements OpsConfig {
     public void downloadVideoFromServer()
     {
         StartDownloadTask downloadTask = new StartDownloadTask();
+
         TaskData taskData = new TaskData();
         taskData.setServerId(mStoredVideo.getServerId());
+        taskData.setVideo(mStoredVideo.getVideo());
         taskData.setContext(mActivity.get().getApplicationContext());
+
         downloadTask.execute(taskData);
         Log.i(Constants.TAG, "Task to download the video invoked");
     }

@@ -127,6 +127,11 @@ public class VideoOps extends AsyncTask<Void, Void, List<VideoDecorator>> implem
 
         List<Video> vids = new ArrayList<>();
 
+        if (videos == null)
+        {
+            return;
+        }
+
         for (VideoDecorator decorator: videos)
         {
             vids.add(decorator.getVideo());

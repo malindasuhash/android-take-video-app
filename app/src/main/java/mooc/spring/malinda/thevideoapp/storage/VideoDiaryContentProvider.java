@@ -71,7 +71,24 @@ public class VideoDiaryContentProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
-        // TODO: Implement this to handle requests to update one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
+
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        ContentValues vals = new ContentValues();
+        vals.put(VideoDiaryContract.VideoEntry.COLUMN_LOCAL_VIDEO_ID, values.get(Constants.NewVideoId).toString());
+
+        String oldVideoCheck = VideoDiaryContract.VideoEntry.COLUMN_LOCAL_VIDEO_ID + '=' + values.getAsString(Constants.OldVideoId);
+
+        int affected = db.update(VideoDiaryContract.VideoEntry.TABLE_NAME, vals, oldVideoCheck, null);
+
+        Log.i(Constants.TAG, "Affected rows by update " + affected);
+
+        if (affected > 0)
+        {
+            // Telling the world that something has changed.
+            mContext.getContentResolver().notifyChange(VideoDiaryContract.VideoEntry.CONTENT_URI, null);
+        }
+
+        return affected;
     }
 }

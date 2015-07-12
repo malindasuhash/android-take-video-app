@@ -9,6 +9,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="video.diary.simple.READ" />
+    <uses-permission android:name="video.diary.simple.WRITE" />
+
+    <permission android:name="video.diary.simple.WRITE"></permission>
 
     <application
         android:allowBackup="true"
@@ -41,7 +45,7 @@
             android:name=".storage.VideoDiaryContentProvider"
             android:authorities="video.diary.simple"
             android:enabled="true"
-            android:exported="false" >
+            android:exported="true" >
         </provider>
 
         <activity
@@ -51,7 +55,11 @@
 
         <service
             android:name=".services.VideoDownloadService"
-            android:exported="false" >
+            android:enabled="true"
+            android:grantUriPermissions="true"
+            android:readPermission="video.diary.simple.READ"
+            android:writePermission="video.diary.simple.WRITE"
+            android:exported="true" >
         </service>
     </application>
 

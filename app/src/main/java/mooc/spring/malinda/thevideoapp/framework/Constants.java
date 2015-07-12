@@ -15,4 +15,8 @@ public class Constants {
     public static final String VideoId = "videoId";
 
     public static final String Video = "video-";
+
+    public static final String NewVideoId = "newVideoId";
+
+    public static final String OldVideoId = "oldVideoId";
 }

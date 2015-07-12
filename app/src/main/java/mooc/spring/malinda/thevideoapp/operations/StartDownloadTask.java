@@ -14,6 +14,7 @@ public class StartDownloadTask extends AsyncTask<TaskData, Void, Void> {
 
         Intent intent = new Intent(data[0].getContext(), VideoDownloadService.class);
         intent.putExtra(Constants.VideoId, data[0].getServerId());
+        intent.putExtra(Constants.OldVideoId, data[0].getVideo().getVideoId());
         data[0].getContext().startService(intent);
 
         return null;

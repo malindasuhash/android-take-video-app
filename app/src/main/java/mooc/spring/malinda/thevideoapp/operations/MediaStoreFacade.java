@@ -1,6 +1,7 @@
 package mooc.spring.malinda.thevideoapp.operations;
 
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;

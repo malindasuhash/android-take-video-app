@@ -1,6 +1,7 @@
 package mooc.spring.malinda.thevideoapp.services;
 
 import android.app.IntentService;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
@@ -19,6 +20,8 @@ import java.io.OutputStream;
 
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.VideoHandler;
+import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
+import mooc.spring.malinda.thevideoapp.utils.Toaster;
 import retrofit.client.Response;
 
 public class VideoDownloadService extends IntentService {
@@ -31,6 +34,7 @@ public class VideoDownloadService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             long videoId = intent.getLongExtra(Constants.VideoId, 0);
+            long oldVideoId = intent.getLongExtra(Constants.OldVideoId, 0);
 
             if (videoId == 0)
             {
@@ -39,16 +43,22 @@ public class VideoDownloadService extends IntentService {
             }
 
             Log.i(Constants.TAG, "The server video id is " + videoId);
+            Log.i(Constants.TAG, "Old video id is " + oldVideoId);
 
             VideoHandler handler = new VideoHandler();
             Response response = handler.downloadVideo(videoId);
 
             Log.i(Constants.TAG, "Storing the downloaded video");
-            storeTheReceivedFile(this.getApplicationContext(),response, Constants.Video + videoId);
+            storeTheReceivedFile(this.getApplicationContext(), response, Constants.Video + videoId + ".mp4", oldVideoId);
+
+            Toaster.Show(this, "Requested file has been downloaded now.");
+
+            // Try to add to media store
+
         }
     }
 
-    private File storeTheReceivedFile(Context context, Response response, String videoName)
+    private File storeTheReceivedFile(Context context, Response response, String videoName, long oldVideoId)
     {
         // Try to get the File from the Directory where the Video
         // is to be stored.
@@ -77,7 +87,7 @@ public class VideoDownloadService extends IntentService {
                 // Always notify the MediaScanners after Downloading
                 // the Video, so that it is immediately available to
                 // the user.
-                notifyMediaScanners(context, file);
+                notifyMediaScanners(context, file, oldVideoId);
 
                 return file;
             } catch (FileNotFoundException e) {
@@ -90,19 +100,35 @@ public class VideoDownloadService extends IntentService {
         return null;
     }
 
-    private static void notifyMediaScanners(Context context,
-                                            File videoFile) {
+    private static void notifyMediaScanners(final Context context,
+                                            File videoFile, final long oldVideoId) {
         // Tell the media scanner about the new file so that it is
         // immediately available to the user.
         MediaScannerConnection.scanFile
                 (context,
-                        new String[]{videoFile.toString()},
+                        new String[]{videoFile.getAbsolutePath()},
                         null,
                         new MediaScannerConnection.OnScanCompletedListener() {
                             public void onScanCompleted(String path,
                                                         Uri uri) {
+                                Log.i(Constants.TAG, "Once added, the returned url " + uri.toString());
+
+                                // Update my content provider to use the new local video id.
+                                Log.i(Constants.TAG, "Last segment " + uri.getLastPathSegment());
+                                long last = Long.parseLong(uri.getLastPathSegment());
+
+                                ContentValues values = new ContentValues();
+                                values.put(Constants.NewVideoId, last);
+                                values.put(Constants.OldVideoId, oldVideoId);
+
+                                Log.i(Constants.TAG, "Updating local record.");
+                                context.getApplicationContext()
+                                        .getContentResolver()
+                                        .update(VideoDiaryContract.VideoEntry.CONTENT_URI, values, null,null);
                             }
                         });
+
+        Log.i(Constants.TAG, "download video path " + videoFile.toString());
     }
 
     private static File getVideoStorageDir(String videoName) {
