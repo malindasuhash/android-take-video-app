@@ -2,6 +2,7 @@ package mooc.spring.malinda.thevideoapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ListView;
 
 import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.ConfigurationHandledActivity;
+import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.VideoOps;
 
 
@@ -28,6 +30,13 @@ public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(Constants.TAG, "Resuming.. coming back to the view.");
+        this.mOps.onConfiguration(this, false);
     }
 
     @Override

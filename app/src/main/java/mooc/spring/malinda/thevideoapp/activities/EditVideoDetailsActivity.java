@@ -11,6 +11,7 @@ import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.ConfigurationHandledActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.VideoEdit;
+import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
 public class EditVideoDetailsActivity extends ConfigurationHandledActivity<VideoEdit> {
 
@@ -57,6 +58,7 @@ public class EditVideoDetailsActivity extends ConfigurationHandledActivity<Video
     public void deleteVideo(View view)
     {
         this.mOps.deleteVideo();
+        finish();
     }
 
     /**
@@ -65,6 +67,8 @@ public class EditVideoDetailsActivity extends ConfigurationHandledActivity<Video
     public void downloadVideo(View view)
     {
         this.mOps.downloadVideoFromServer();
+        Toaster.Show(this, "Download started");
+        finish();
     }
 
     /**

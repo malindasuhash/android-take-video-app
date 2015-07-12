@@ -59,7 +59,7 @@
             android:grantUriPermissions="true"
             android:readPermission="video.diary.simple.READ"
             android:writePermission="video.diary.simple.WRITE"
-            android:exported="true" >
+            android:exported="false" >
         </service>
     </application>
 
