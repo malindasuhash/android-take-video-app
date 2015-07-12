@@ -55,8 +55,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/remove_video"
-        android:id="@+id/button3"
+        android:id="@+id/delLocally"
         android:layout_gravity="center_horizontal"
         android:onClick="deleteVideo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/no_vid"
+        android:id="@+id/noVideoMsg"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

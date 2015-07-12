@@ -17,4 +17,5 @@
     <string name="title_activity_edit_video_details">Edit Video Details</string>
     <string name="download_video">Download video</string>
     <string name="remove_video">Delete Video from Local store</string>
+    <string name="no_vid">Sorry, this video doesnt exist locally. Please download it from Server.</string>
 </resources>

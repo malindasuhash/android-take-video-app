@@ -41,6 +41,15 @@ public class VideoEdit implements OpsConfig {
         {
             // No need to show this as video exists.
             mActivity.get().findViewById(R.id.uploadVideo).setVisibility(View.INVISIBLE);
+            mActivity.get().findViewById(R.id.delLocally).setVisibility(View.VISIBLE);
+            mActivity.get().findViewById(R.id.startPlaying).setVisibility(View.VISIBLE);
+            mActivity.get().findViewById(R.id.noVideoMsg).setVisibility(View.INVISIBLE);
+        } else
+        {
+            mActivity.get().findViewById(R.id.uploadVideo).setVisibility(View.VISIBLE);
+            mActivity.get().findViewById(R.id.delLocally).setVisibility(View.INVISIBLE);
+            mActivity.get().findViewById(R.id.startPlaying).setVisibility(View.INVISIBLE);
+            mActivity.get().findViewById(R.id.noVideoMsg).setVisibility(View.VISIBLE);
         }
     }
 
