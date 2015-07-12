@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
+import android.widget.RatingBar;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.framework.OpsConfig;
+import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
 public class VideoEdit implements OpsConfig {
@@ -20,6 +23,7 @@ public class VideoEdit implements OpsConfig {
     private long mVideoId;
     private boolean mVideoExists;
     private String mFilePath;
+    private Video mStoredVideo;
 
     @Override
     public void onConfiguration(Activity activity, boolean firstTimeIn) {
@@ -30,6 +34,7 @@ public class VideoEdit implements OpsConfig {
             mMediaStoreFacade = new MediaStoreFacade(mActivity.get().getApplicationContext());
             mVideoId = (long)mActivity.get().getIntent().getFloatExtra(Constants.VideoId, 0);
             mVideoExists = doesVideoExists();
+            setVideoRatings();
         }
 
         if (mVideoExists)
@@ -52,6 +57,23 @@ public class VideoEdit implements OpsConfig {
         }
     }
 
+    private void setVideoRatings()
+    {
+        // TODO: implement single lookup in the content provider.
+        List<Video> videos = mMediaStoreFacade.getVideos(VideoDiaryContract.VideoEntry.CONTENT_URI);
+
+        for (Video v : videos)
+        {
+            if (v.getVideoId() == mVideoId)
+            {
+                mStoredVideo = v;
+                break;
+            }
+        }
+
+        setRatingValue();
+    }
+
     /**
      * Check whether the video exists in media store.
      */
@@ -71,4 +93,16 @@ public class VideoEdit implements OpsConfig {
         return false;
     }
 
+    private void setRatingValue()
+    {
+        if (mStoredVideo != null)
+        {
+            Log.i(Constants.TAG, "Setting the rating");
+            ((RatingBar) mActivity.get().findViewById(R.id.ratings)).setRating(mStoredVideo.getRating());
+        }
+        else
+        {
+            ((RatingBar) mActivity.get().findViewById(R.id.ratings)).setRating(0);
+        }
+    }
 }
