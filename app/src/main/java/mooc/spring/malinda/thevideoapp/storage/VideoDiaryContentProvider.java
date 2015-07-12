@@ -12,6 +12,7 @@ import mooc.spring.malinda.thevideoapp.framework.Constants;
 
 public class VideoDiaryContentProvider extends ContentProvider {
 
+
     private Context mContext;
     private SqlDbHelper mDbHelper;
 
