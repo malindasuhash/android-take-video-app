@@ -1,14 +1,12 @@
 package mooc.spring.malinda.thevideoapp.services;
 
 import android.app.IntentService;
-import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import org.apache.commons.io.IOUtils;
@@ -23,12 +21,11 @@ import java.io.OutputStream;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.VideoHandler;
 import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
+import mooc.spring.malinda.thevideoapp.utils.NotificationHandler;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;
 import retrofit.client.Response;
 
 public class VideoDownloadService extends IntentService {
-
-    private static final int NOTIFICATION_ID = 1;
 
     public VideoDownloadService() {
         super("VideoDownloadService");
@@ -49,7 +46,7 @@ public class VideoDownloadService extends IntentService {
             Log.i(Constants.TAG, "The server video id is " + videoId);
             Log.i(Constants.TAG, "Old video id is " + oldVideoId);
 
-            startNotification();
+            NotificationHandler.startNotification(this, false);
             VideoHandler handler = new VideoHandler();
             Response response = handler.downloadVideo(videoId);
 
@@ -132,7 +129,7 @@ public class VideoDownloadService extends IntentService {
                                         .getContentResolver()
                                         .update(VideoDiaryContract.VideoEntry.CONTENT_URI, values, null,null);
 
-                                finishNotification("Finished downloading!");
+                                NotificationHandler.finishNotification(context, false);
                             }
                         });
 
@@ -163,48 +160,4 @@ public class VideoDownloadService extends IntentService {
         return Environment.MEDIA_MOUNTED.equals
                 (Environment.getExternalStorageState());
     }
-
-    /**
-     * Starts the Notification to show the progress of video upload.
-     */
-    private void startNotification() {
-        // Gets access to the Android Notification Service.
-        NotificationManager mNotifyManager = (NotificationManager)
-                getSystemService(Context.NOTIFICATION_SERVICE);
-
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setContentTitle("Video Upload")
-                        .setContentText("Upload in progress")
-                        .setSmallIcon(android.R.drawable.stat_sys_download)
-                        .setTicker("Uploading video")
-                        .setProgress(0,
-                                0,
-                                true);
-
-        // Build and issue the notification.
-        mNotifyManager.notify(NOTIFICATION_ID,
-                mBuilder.build());
-    }
-
-    private  void finishNotification(String status) {
-        // When the loop is finished, updates the notification.
-        NotificationCompat.Builder mBuilder =  new NotificationCompat.Builder(this)
-                .setContentTitle(status)
-                // Removes the progress bar.
-                .setProgress (0,
-                        0,
-                        false)
-                .setSmallIcon(android.R.drawable.stat_sys_upload_done)
-                .setContentText("")
-                .setTicker(status);
-
-        // Build the Notification with the given
-        // Notification Id.
-        NotificationManager mNotifyManager = (NotificationManager)
-                getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotifyManager.notify(NOTIFICATION_ID,
-                mBuilder.build());
-    }
-
 }

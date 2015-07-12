@@ -12,6 +12,7 @@ import mooc.spring.malinda.thevideoapp.operations.VideoStorageHandler;
 import mooc.spring.malinda.thevideoapp.retrofit.VideoMetaDto;
 import mooc.spring.malinda.thevideoapp.retrofit.VideoStatus;
 import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
+import mooc.spring.malinda.thevideoapp.utils.NotificationHandler;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
 public class VideoUploaderService extends IntentService {
@@ -57,6 +58,8 @@ public class VideoUploaderService extends IntentService {
             video.setRating(ratings);
             video.setPath(videoPath);
 
+            NotificationHandler.startNotification(this, true);
+
             // Uploads meta data to the server and obtains the data uri.
             VideoMetaDto metaDto = mVideoHandler.uploadMetaData(video);
             Log.i(Constants.TAG, "Meta data uploaded, saving the state now");
@@ -78,6 +81,8 @@ public class VideoUploaderService extends IntentService {
                     video.getVideoId(), Long.toString(localVideoId));
 
             Toaster.Show(this.getApplicationContext(), "Saved Uploaded to the server.");
+
+            NotificationHandler.finishNotification(this, true);
         }
     }
 }
