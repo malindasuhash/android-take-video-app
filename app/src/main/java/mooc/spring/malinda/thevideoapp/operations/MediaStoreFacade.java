@@ -54,9 +54,9 @@ public class MediaStoreFacade {
     /**
      * Returns a collection of videos from content provider.
      */
-    public List<Video> getVideos(Uri videos)
+    public List<VideoDecorator> getVideos(Uri videos)
     {
-        List<Video> all = new ArrayList<>();
+        List<VideoDecorator> all = new ArrayList<>();
 
         try (Cursor cursor =
                      context.getContentResolver().query(videos,
@@ -74,10 +74,15 @@ public class MediaStoreFacade {
                    String name = cursor.getString(cursor.getColumnIndex(VideoDiaryContract.VideoEntry.COLUMN_TITLE));
                    String rating = cursor.getString(cursor.getColumnIndex(VideoDiaryContract.VideoEntry.COLUMN_STAR_RATING));
                    String videoId = cursor.getString(cursor.getColumnIndex(VideoDiaryContract.VideoEntry.COLUMN_LOCAL_VIDEO_ID));
-                   Video video = new Video(name, 0, "video/mp4");
+                    String serverId = cursor.getString(cursor.getColumnIndex(VideoDiaryContract.VideoEntry.COLUMN_VIDEO_ID));
+
+                    Video video = new Video(name, 0, "video/mp4");
+                   VideoDecorator decorator = new VideoDecorator(video);
+                    decorator.setServerId((long)Float.parseFloat(serverId));
+
                    video.setRating(Float.parseFloat(rating));
                    video.setVideoId(Long.parseLong(videoId));
-                   all.add(video);
+                   all.add(decorator);
                    Log.i(Constants.TAG, "Reading data");
                    cursor.moveToNext();
                 }

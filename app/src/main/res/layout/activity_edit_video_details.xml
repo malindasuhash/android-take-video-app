@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:text="@string/download_video"
         android:id="@+id/uploadVideo"
-        android:onClick="uploadVideo" />
+        android:onClick="downloadVideo" />
 
     <Button
         style="?android:attr/buttonStyleSmall"

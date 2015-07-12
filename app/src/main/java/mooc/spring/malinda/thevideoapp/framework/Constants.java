@@ -13,4 +13,6 @@ public class Constants {
     public static final String VideoPath = "VideoPath";
 
     public static final String VideoId = "videoId";
+
+    public static final String Video = "video-";
 }

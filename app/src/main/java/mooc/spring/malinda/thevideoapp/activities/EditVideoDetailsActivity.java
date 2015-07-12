@@ -60,6 +60,14 @@ public class EditVideoDetailsActivity extends ConfigurationHandledActivity<Video
     }
 
     /**
+     * Downloads the video from server.
+     */
+    public void downloadVideo(View view)
+    {
+        this.mOps.downloadVideoFromServer();
+    }
+
+    /**
      * Creates the intent to view the details of the video.
      */
     public static Intent makeIntentToEditVideo(Context context, float videoId)

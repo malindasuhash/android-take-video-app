@@ -1,11 +1,14 @@
 package mooc.spring.malinda.thevideoapp.retrofit;
 
 import mooc.spring.malinda.thevideoapp.operations.Video;
+import retrofit.client.Response;
 import retrofit.http.Body;
+import retrofit.http.GET;
 import retrofit.http.Multipart;
 import retrofit.http.POST;
 import retrofit.http.Part;
 import retrofit.http.Path;
+import retrofit.http.Streaming;
 import retrofit.mime.TypedFile;
 
 public interface VideoSvc {
@@ -23,4 +26,11 @@ public interface VideoSvc {
     @Multipart
     @POST("/video/{id}/data")
     VideoStatus storeVideo(@Path("id") long id, @Part("data")TypedFile videoData);
+
+    /**
+     * Downloads the video from server.
+     */
+    @Streaming
+    @GET("/video/{id}/data")
+    Response downloadVideoData(@Path("id") long id);
 }

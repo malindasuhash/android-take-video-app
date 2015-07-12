@@ -13,6 +13,7 @@ import java.util.List;
 import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.framework.OpsConfig;
+import mooc.spring.malinda.thevideoapp.services.TaskData;
 import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
@@ -23,7 +24,7 @@ public class VideoEdit implements OpsConfig {
     private long mVideoId;
     private boolean mVideoExists;
     private String mFilePath;
-    private Video mStoredVideo;
+    private VideoDecorator mStoredVideo;
 
     @Override
     public void onConfiguration(Activity activity, boolean firstTimeIn) {
@@ -54,6 +55,19 @@ public class VideoEdit implements OpsConfig {
     }
 
     /**
+     * Starts off the service task to download the video.
+     */
+    public void downloadVideoFromServer()
+    {
+        StartDownloadTask downloadTask = new StartDownloadTask();
+        TaskData taskData = new TaskData();
+        taskData.setServerId(mStoredVideo.getServerId());
+        taskData.setContext(mActivity.get().getApplicationContext());
+        downloadTask.execute(taskData);
+        Log.i(Constants.TAG, "Task to download the video invoked");
+    }
+
+    /**
      * Removed the video from store.
      */
     public void deleteVideo()
@@ -68,6 +82,9 @@ public class VideoEdit implements OpsConfig {
         }
     }
 
+    /**
+     * Plays the video stored locally.
+     */
     public void playVideo()
     {
         Intent intent = mMediaStoreFacade.makePlayVideoIntent(mActivity.get(), Uri.parse(mFilePath));
@@ -84,11 +101,11 @@ public class VideoEdit implements OpsConfig {
     private void setVideoRatings()
     {
         // TODO: implement single lookup in the content provider.
-        List<Video> videos = mMediaStoreFacade.getVideos(VideoDiaryContract.VideoEntry.CONTENT_URI);
+        List<VideoDecorator> videos = mMediaStoreFacade.getVideos(VideoDiaryContract.VideoEntry.CONTENT_URI);
 
-        for (Video v : videos)
+        for (VideoDecorator v : videos)
         {
-            if (v.getVideoId() == mVideoId)
+            if (v.getVideo().getVideoId() == mVideoId)
             {
                 mStoredVideo = v;
                 break;
@@ -122,7 +139,7 @@ public class VideoEdit implements OpsConfig {
         if (mStoredVideo != null)
         {
             Log.i(Constants.TAG, "Setting the rating");
-            ((RatingBar) mActivity.get().findViewById(R.id.ratings)).setRating(mStoredVideo.getRating());
+            ((RatingBar) mActivity.get().findViewById(R.id.ratings)).setRating(mStoredVideo.getVideo().getRating());
         }
         else
         {

@@ -23,4 +23,13 @@ public class TaskData {
 
     private Video video;
     private Context context;
+    private long serverId;
+
+    public long getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(long serverId) {
+        this.serverId = serverId;
+    }
 }

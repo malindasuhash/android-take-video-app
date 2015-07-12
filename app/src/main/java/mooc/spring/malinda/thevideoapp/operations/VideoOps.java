@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 import mooc.spring.malinda.thevideoapp.R;
@@ -23,7 +24,7 @@ import mooc.spring.malinda.thevideoapp.framework.OpsConfig;
 import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
-public class VideoOps extends AsyncTask<Void, Void, List<Video>> implements OpsConfig {
+public class VideoOps extends AsyncTask<Void, Void, List<VideoDecorator>> implements OpsConfig {
 
     private static final int REQUEST_VIDEO_CAPTURE = 1;
 
@@ -114,15 +115,23 @@ public class VideoOps extends AsyncTask<Void, Void, List<Video>> implements OpsC
     }
 
     @Override
-    protected List<Video> doInBackground(Void... voids) {
+    protected List<VideoDecorator> doInBackground(Void... voids) {
         MediaStoreFacade facade = new MediaStoreFacade(getActivity().getApplicationContext());
         return facade.getVideos(VideoDiaryContract.VideoEntry.CONTENT_URI);
     }
 
     @Override
-    protected void onPostExecute(List<Video> videos) {
+    protected void onPostExecute(List<VideoDecorator> videos) {
         super.onPostExecute(videos);
         Log.i(Constants.TAG, "Setting video data in post execute");
-        mAdapter.setVideos(videos);
+
+        List<Video> vids = new ArrayList<>();
+
+        for (VideoDecorator decorator: videos)
+        {
+            vids.add(decorator.getVideo());
+        }
+
+        mAdapter.setVideos(vids);
     }
 }

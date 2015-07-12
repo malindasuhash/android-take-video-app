@@ -7,6 +7,7 @@ import mooc.spring.malinda.thevideoapp.retrofit.VideoMetaDto;
 import mooc.spring.malinda.thevideoapp.retrofit.VideoStatus;
 import mooc.spring.malinda.thevideoapp.retrofit.VideoSvc;
 import retrofit.RestAdapter;
+import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
 public class VideoHandler {
@@ -38,5 +39,11 @@ public class VideoHandler {
         File videoFile = new File(video.getPath());
         VideoStatus status = mService.storeVideo(video.getVideoId(), new TypedFile(video.getContentType(), videoFile));
         return status;
+    }
+
+    public Response downloadVideo(long id)
+    {
+        Response response = mService.downloadVideoData(id);
+        return response;
     }
 }

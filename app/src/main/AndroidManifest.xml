@@ -48,6 +48,11 @@
             android:name=".activities.EditVideoDetailsActivity"
             android:label="@string/title_activity_edit_video_details" >
         </activity>
+
+        <service
+            android:name=".services.VideoDownloadService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>
