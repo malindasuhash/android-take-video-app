@@ -25,10 +25,13 @@ public class VideoEdit implements OpsConfig {
     private boolean mVideoExists;
     private String mFilePath;
     private VideoDecorator mStoredVideo;
+    private boolean firstTime;
 
     @Override
     public void onConfiguration(Activity activity, boolean firstTimeIn) {
         mActivity = new WeakReference<>(activity);
+
+        this.firstTime = firstTimeIn;
 
         if (firstTimeIn)
         {
@@ -45,12 +48,14 @@ public class VideoEdit implements OpsConfig {
             mActivity.get().findViewById(R.id.delLocally).setVisibility(View.VISIBLE);
             mActivity.get().findViewById(R.id.startPlaying).setVisibility(View.VISIBLE);
             mActivity.get().findViewById(R.id.noVideoMsg).setVisibility(View.INVISIBLE);
+            mActivity.get().findViewById(R.id.ratings).setVisibility(View.VISIBLE);
         } else
         {
             mActivity.get().findViewById(R.id.uploadVideo).setVisibility(View.VISIBLE);
             mActivity.get().findViewById(R.id.delLocally).setVisibility(View.INVISIBLE);
             mActivity.get().findViewById(R.id.startPlaying).setVisibility(View.INVISIBLE);
             mActivity.get().findViewById(R.id.noVideoMsg).setVisibility(View.VISIBLE);
+            mActivity.get().findViewById(R.id.ratings).setVisibility(View.INVISIBLE);
         }
     }
 
@@ -144,9 +149,7 @@ public class VideoEdit implements OpsConfig {
         Video video = mMediaStoreFacade.getVideoById(mVideoId);
 
         if (video != null) {
-            Toaster.Show(mActivity.get(), "VideoExists!");
 
-            // Get stored information.
             mFilePath = mMediaStoreFacade.getVideoFilePath(mVideoId);
 
             return true;

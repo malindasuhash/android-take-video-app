@@ -40,4 +40,10 @@ public interface VideoSvc {
      */
     @PUT("/video/{id}/{rating}")
     boolean setNewRating(@Path("id") long id, @Path("rating") float newRating);
+
+    /**
+     * Gets the calculated rating from server.
+     */
+    @GET("/video/{id}/rating")
+    float getRating(@Path("id") long id);
 }

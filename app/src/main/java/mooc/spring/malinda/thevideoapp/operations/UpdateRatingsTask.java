@@ -8,7 +8,6 @@ public class UpdateRatingsTask extends AsyncTask<RatingInfo, Void, Void> {
 
     @Override
     protected Void doInBackground(RatingInfo... ratings) {
-
         handler.updateNewRating(ratings[0].getServerVideoId(), ratings[0].getNewRatings());
         return null;
     }

@@ -1,5 +1,7 @@
 package mooc.spring.malinda.thevideoapp.operations;
 
+import android.util.Log;
+
 import java.io.File;
 
 import mooc.spring.malinda.thevideoapp.framework.Constants;
@@ -55,6 +57,15 @@ public class VideoHandler {
      */
     public void updateNewRating(long id, float newRating)
     {
+        Log.i(Constants.TAG, "Calling service to update rating");
         mService.setNewRating(id, newRating);
+    }
+
+    /**
+     * Gets the calculated rating from server.
+     */
+    public float getRatingFromServer(long id)
+    {
+        return mService.getRating(id);
     }
 }

@@ -51,16 +51,11 @@ public class VideoDownloadService extends IntentService {
             Response response = handler.downloadVideo(videoId);
 
             Log.i(Constants.TAG, "Storing the downloaded video");
-            storeTheReceivedFile(this.getApplicationContext(), response, Constants.Video + videoId + ".mp4", oldVideoId);
-
-            Toaster.Show(this, "Requested file has been downloaded now.");
-
-            // Try to add to media store
-
+            storeTheReceivedFile(this.getApplicationContext(), response, Constants.Video + videoId + ".mp4", oldVideoId, videoId);
         }
     }
 
-    private File storeTheReceivedFile(Context context, Response response, String videoName, long oldVideoId)
+    private File storeTheReceivedFile(Context context, Response response, String videoName, long oldVideoId, long serverVideoId)
     {
         // Try to get the File from the Directory where the Video
         // is to be stored.
@@ -89,7 +84,7 @@ public class VideoDownloadService extends IntentService {
                 // Always notify the MediaScanners after Downloading
                 // the Video, so that it is immediately available to
                 // the user.
-                notifyMediaScanners(context, file, oldVideoId);
+                notifyMediaScanners(context, file, oldVideoId, serverVideoId);
 
 
                 return file;
@@ -104,7 +99,7 @@ public class VideoDownloadService extends IntentService {
     }
 
     private void notifyMediaScanners(final Context context,
-                                            File videoFile, final long oldVideoId) {
+                                            File videoFile, final long oldVideoId, final  long serverVideoId) {
         // Tell the media scanner about the new file so that it is
         // immediately available to the user.
         MediaScannerConnection.scanFile
@@ -123,6 +118,9 @@ public class VideoDownloadService extends IntentService {
                                 ContentValues values = new ContentValues();
                                 values.put(Constants.NewVideoId, last);
                                 values.put(Constants.OldVideoId, oldVideoId);
+
+                                float serverRatings = getCumulativeRating(serverVideoId);
+                                values.put(Constants.ServerRating, serverRatings);
 
                                 Log.i(Constants.TAG, "Updating local record.");
                                 context.getApplicationContext()
@@ -159,5 +157,16 @@ public class VideoDownloadService extends IntentService {
     private static boolean isExternalStorageWritable() {
         return Environment.MEDIA_MOUNTED.equals
                 (Environment.getExternalStorageState());
+    }
+
+    private float getCumulativeRating(long serverVideoId)
+    {
+        VideoHandler handler = new VideoHandler();
+
+        Log.i(Constants.TAG, "Getting calculated rating from server for id" + serverVideoId);
+        float rating = handler.getRatingFromServer(serverVideoId);
+        Log.i(Constants.TAG, "Rating from server is " + rating);
+
+        return rating;
     }
 }

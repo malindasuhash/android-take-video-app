@@ -19,4 +19,6 @@ public class Constants {
     public static final String NewVideoId = "newVideoId";
 
     public static final String OldVideoId = "oldVideoId";
+
+    public static final String ServerRating = "serverRating";
 }

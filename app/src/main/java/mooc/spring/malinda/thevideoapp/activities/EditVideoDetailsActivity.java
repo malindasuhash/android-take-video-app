@@ -69,6 +69,7 @@ public class EditVideoDetailsActivity extends ConfigurationHandledActivity<Video
         ((RatingBar) findViewById(R.id.ratings)).setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                if (!b) return;
                 updateRating(ratingBar);
             }
         });
@@ -79,8 +80,8 @@ public class EditVideoDetailsActivity extends ConfigurationHandledActivity<Video
      */
     public void updateRating(View view)
     {
-        Log.i(Constants.TAG, "Updating rating.");
-        this.mOps.updateRatingsOnServer();
+       Log.i(Constants.TAG, "Updating rating.");
+       this.mOps.updateRatingsOnServer();
     }
 
     /**

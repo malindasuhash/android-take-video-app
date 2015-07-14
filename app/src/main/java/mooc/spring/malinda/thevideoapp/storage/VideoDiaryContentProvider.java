@@ -77,6 +77,7 @@ public class VideoDiaryContentProvider extends ContentProvider {
 
         ContentValues vals = new ContentValues();
         vals.put(VideoDiaryContract.VideoEntry.COLUMN_LOCAL_VIDEO_ID, values.get(Constants.NewVideoId).toString());
+        vals.put(VideoDiaryContract.VideoEntry.COLUMN_STAR_RATING, values.get(Constants.ServerRating).toString());
 
         String oldVideoCheck = VideoDiaryContract.VideoEntry.COLUMN_LOCAL_VIDEO_ID + '=' + values.getAsString(Constants.OldVideoId);
 
