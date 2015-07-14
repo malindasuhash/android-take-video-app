@@ -27,7 +27,8 @@
             android:text="@string/sync_with_server"
             android:id="@+id/button2"
             android:layout_weight="1"
-            android:nestedScrollingEnabled="false" />
+            android:nestedScrollingEnabled="false"
+            android:onClick="refreshVideoList" />
 
     </LinearLayout>
 

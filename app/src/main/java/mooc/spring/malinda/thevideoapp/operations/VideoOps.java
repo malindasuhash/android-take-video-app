@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -12,8 +11,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
 
 import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.activities.EditVideoDetailsActivity;
@@ -21,10 +18,9 @@ import mooc.spring.malinda.thevideoapp.activities.MainActivity;
 import mooc.spring.malinda.thevideoapp.activities.VideoDetailsActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.framework.OpsConfig;
-import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
-public class VideoOps extends AsyncTask<Void, Void, List<VideoDecorator>> implements OpsConfig {
+public class VideoOps implements OpsConfig {
 
     private static final int REQUEST_VIDEO_CAPTURE = 1;
 
@@ -78,9 +74,11 @@ public class VideoOps extends AsyncTask<Void, Void, List<VideoDecorator>> implem
         getActivity().startActivity(intent);
     }
 
+    /**
+     * Called on configuration changes.
+     */
     public void onConfiguration(Activity activity,
                                 boolean firstTimeIn) {
-        // Create a WeakReference to the activity.
 
         mActivity = new WeakReference<>(activity);
         mVideoList = new WeakReference<>((ListView)getActivity().findViewById(R.id.listView));
@@ -91,7 +89,6 @@ public class VideoOps extends AsyncTask<Void, Void, List<VideoDecorator>> implem
         }
 
         mVideoList.get().setAdapter(mAdapter);
-
     }
 
     private void showVideoDetails(long id)
@@ -103,40 +100,20 @@ public class VideoOps extends AsyncTask<Void, Void, List<VideoDecorator>> implem
         getActivity().startActivity(showDetails);
     }
 
-    private void getVideoList()
+    public void getVideoList()
     {
-        this.execute();
+        LoadVideoListTask task = new LoadVideoListTask();
+        LoadData data = new LoadData();
+        data.setContext(getActivity());
+        data.setAdapter(mAdapter);
+
+        task.execute(data);
+
         Log.i(Constants.TAG, "Loading videos, through the task.");
     }
 
     private MainActivity getActivity()
     {
         return (MainActivity)mActivity.get();
-    }
-
-    @Override
-    protected List<VideoDecorator> doInBackground(Void... voids) {
-        MediaStoreFacade facade = new MediaStoreFacade(getActivity().getApplicationContext());
-        return facade.getVideos(VideoDiaryContract.VideoEntry.CONTENT_URI);
-    }
-
-    @Override
-    protected void onPostExecute(List<VideoDecorator> videos) {
-        super.onPostExecute(videos);
-        Log.i(Constants.TAG, "Setting video data in post execute");
-
-        List<Video> vids = new ArrayList<>();
-
-        if (videos == null)
-        {
-            return;
-        }
-
-        for (VideoDecorator decorator: videos)
-        {
-            vids.add(decorator.getVideo());
-        }
-
-        mAdapter.setVideos(vids);
     }
 }

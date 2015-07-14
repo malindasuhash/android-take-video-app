@@ -4,7 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="take_a_new_video">Take a new video!</string>
-    <string name="sync_with_server">Sync with Server!</string>
+    <string name="sync_with_server">Refresh!</string>
     <string name="video_list">Videos in device and server</string>
     <string name="title_activity_video_details">New Video Details</string>
     <string name="video_size">Size</string>

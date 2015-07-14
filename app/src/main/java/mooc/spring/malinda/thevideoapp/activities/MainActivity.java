@@ -2,7 +2,6 @@ package mooc.spring.malinda.thevideoapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,8 +10,8 @@ import android.widget.ListView;
 
 import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.ConfigurationHandledActivity;
-import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.VideoOps;
+import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
 
 public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
@@ -32,11 +31,14 @@ public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
         return true;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i(Constants.TAG, "Resuming.. coming back to the view.");
-        this.mOps.onConfiguration(this, false);
+    /**
+     * Refresh the UI.
+     * @param view
+     */
+    public void refreshVideoList(View view)
+    {
+        Toaster.Show(this, "... Refreshing ...");
+        mOps.getVideoList();
     }
 
     @Override
