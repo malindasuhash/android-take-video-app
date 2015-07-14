@@ -41,9 +41,20 @@ public class VideoHandler {
         return status;
     }
 
+    /**
+     * Downloads the video from server.
+     */
     public Response downloadVideo(long id)
     {
         Response response = mService.downloadVideoData(id);
         return response;
+    }
+
+    /**
+     * Updates the new rating on the server.
+     */
+    public void updateNewRating(long id, float newRating)
+    {
+        mService.setNewRating(id, newRating);
     }
 }

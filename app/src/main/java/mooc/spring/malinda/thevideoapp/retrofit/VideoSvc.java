@@ -6,6 +6,7 @@ import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.Multipart;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Part;
 import retrofit.http.Path;
 import retrofit.http.Streaming;
@@ -33,4 +34,10 @@ public interface VideoSvc {
     @Streaming
     @GET("/video/{id}/data")
     Response downloadVideoData(@Path("id") long id);
+
+    /**
+     * Updates the ratings in the server.
+     */
+    @PUT("/video/{id}/{rating}")
+    boolean setNewRating(@Path("id") long id, @Path("rating") float newRating);
 }

@@ -33,7 +33,6 @@ public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
 
     /**
      * Refresh the UI.
-     * @param view
      */
     public void refreshVideoList(View view)
     {

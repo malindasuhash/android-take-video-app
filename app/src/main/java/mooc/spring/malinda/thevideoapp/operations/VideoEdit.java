@@ -71,6 +71,24 @@ public class VideoEdit implements OpsConfig {
     }
 
     /**
+     * Updates the ratings on the server.
+     */
+    public void updateRatingsOnServer()
+    {
+        long serverVideoId = mStoredVideo.getServerId();
+        float newRating = getRatingValue();
+
+        RatingInfo info = new RatingInfo();
+        info.setNewRatings(newRating);
+        info.setServerVideoId(serverVideoId);
+
+        UpdateRatingsTask task = new UpdateRatingsTask();
+        task.execute(info);
+
+        Toaster.Show(mActivity.get(), "Updating Video ratings in the server.");
+    }
+
+    /**
      * Removed the video from store.
      */
     public void deleteVideo()
@@ -148,5 +166,13 @@ public class VideoEdit implements OpsConfig {
         {
             ((RatingBar) mActivity.get().findViewById(R.id.ratings)).setRating(0);
         }
+    }
+
+    private float getRatingValue()
+    {
+        Log.i(Constants.TAG, "Getting the rating");
+        float rating = ((RatingBar) mActivity.get().findViewById(R.id.ratings)).getRating();
+
+        return rating;
     }
 }

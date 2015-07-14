@@ -3,9 +3,11 @@ package mooc.spring.malinda.thevideoapp.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RatingBar;
 
 import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.ConfigurationHandledActivity;
@@ -20,6 +22,7 @@ public class EditVideoDetailsActivity extends ConfigurationHandledActivity<Video
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_video_details);
         super.handleConfiguration(VideoEdit.class);
+        setupRatingCallback();
     }
 
     @Override
@@ -59,6 +62,25 @@ public class EditVideoDetailsActivity extends ConfigurationHandledActivity<Video
     {
         this.mOps.deleteVideo();
         finish();
+    }
+
+    private void setupRatingCallback()
+    {
+        ((RatingBar) findViewById(R.id.ratings)).setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                updateRating(ratingBar);
+            }
+        });
+    }
+
+    /**
+     * Updates the ratings in the server.
+     */
+    public void updateRating(View view)
+    {
+        Log.i(Constants.TAG, "Updating rating.");
+        this.mOps.updateRatingsOnServer();
     }
 
     /**
