@@ -41,15 +41,6 @@ public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
         return true;
     }
 
-    /**
-     * Refresh the UI.
-     */
-    public void refreshVideoList(View view)
-    {
-        Toaster.Show(this, "... Refreshing ...");
-        mOps.getVideoList();
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
