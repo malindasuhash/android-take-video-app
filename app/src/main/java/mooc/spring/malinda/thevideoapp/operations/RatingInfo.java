@@ -3,6 +3,7 @@ package mooc.spring.malinda.thevideoapp.operations;
 public class RatingInfo {
     private long serverVideoId;
     private float newRatings;
+    private long oldVideoId;
 
     public long getServerVideoId() {
         return serverVideoId;
@@ -18,5 +19,13 @@ public class RatingInfo {
 
     public void setNewRatings(float newRatings) {
         this.newRatings = newRatings;
+    }
+
+    public long getOldVideoId() {
+        return oldVideoId;
+    }
+
+    public void setOldVideoId(long oldVideoId) {
+        this.oldVideoId = oldVideoId;
     }
 }

@@ -25,13 +25,10 @@ public class VideoEdit implements OpsConfig {
     private boolean mVideoExists;
     private String mFilePath;
     private VideoDecorator mStoredVideo;
-    private boolean firstTime;
 
     @Override
     public void onConfiguration(Activity activity, boolean firstTimeIn) {
         mActivity = new WeakReference<>(activity);
-
-        this.firstTime = firstTimeIn;
 
         if (firstTimeIn)
         {
@@ -86,6 +83,7 @@ public class VideoEdit implements OpsConfig {
         RatingInfo info = new RatingInfo();
         info.setNewRatings(newRating);
         info.setServerVideoId(serverVideoId);
+        info.setOldVideoId(mStoredVideo.getVideo().getVideoId());
 
         UpdateRatingsTask task = new UpdateRatingsTask(mActivity.get());
         task.execute(info);
