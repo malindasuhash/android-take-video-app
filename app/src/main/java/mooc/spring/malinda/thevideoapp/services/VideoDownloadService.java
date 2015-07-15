@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import mooc.spring.malinda.thevideoapp.framework.Constants;
+import mooc.spring.malinda.thevideoapp.operations.BroadcastRefresh;
 import mooc.spring.malinda.thevideoapp.operations.VideoHandler;
 import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
 import mooc.spring.malinda.thevideoapp.utils.NotificationHandler;
@@ -124,9 +125,10 @@ public class VideoDownloadService extends IntentService {
                                 Log.i(Constants.TAG, "Updating local record.");
                                 context.getApplicationContext()
                                         .getContentResolver()
-                                        .update(VideoDiaryContract.VideoEntry.CONTENT_URI, values, null,null);
+                                        .update(VideoDiaryContract.VideoEntry.CONTENT_URI, values, null, null);
 
                                 NotificationHandler.finishNotification(context.getApplicationContext(), false);
+                                BroadcastRefresh.broadcastRefresh(context.getApplicationContext());
                             }
                         });
 
