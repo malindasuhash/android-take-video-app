@@ -29,6 +29,7 @@ public class VideoDetailsOps implements OpsConfig {
     private long mVideoId;
     private MediaStoreFacade mFacade;
     private float mCurrentRating;
+    private boolean hasSizeExceeded;
 
     private VideoDetailsActivity getActivity()
     {
@@ -74,6 +75,11 @@ public class VideoDetailsOps implements OpsConfig {
      */
     public void storeDetailsAnduploadVideo()
     {
+        if (hasSizeExceeded) {
+            Toaster.Show(mActivity.get(), "Sorry the video should be less than 50MB");
+            return;
+        }
+
         Log.i(Constants.TAG, "Creating an intent to upload and store the video.");
 
         Video video = mFacade.getVideoById(mVideoId);
@@ -131,6 +137,11 @@ public class VideoDetailsOps implements OpsConfig {
         }
 
         ((TextView)getActivity().findViewById(R.id.size)).setText(sizeToShow);
+
+        if (size >= 50)
+        {
+            hasSizeExceeded = true;
+        }
     }
 
     /**

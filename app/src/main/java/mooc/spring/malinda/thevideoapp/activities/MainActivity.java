@@ -18,7 +18,6 @@ import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.ConfigurationHandledActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.VideoOps;
-import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
 
 public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
