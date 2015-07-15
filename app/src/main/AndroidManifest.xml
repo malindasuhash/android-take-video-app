@@ -31,8 +31,7 @@
 
         <service
             android:name=".services.VideoUploaderService"
-            android:exported="false"
-            android:process=":uploader" >
+            android:exported="false" >
         </service>
 
         <activity

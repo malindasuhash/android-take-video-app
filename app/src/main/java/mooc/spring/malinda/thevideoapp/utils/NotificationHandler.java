@@ -53,6 +53,6 @@ public class NotificationHandler {
                 mBuilder.build());
 
         // Now refresh the UI.
-        BroadcastRefresh.broadcastRefresh(context);
+
     }
 }

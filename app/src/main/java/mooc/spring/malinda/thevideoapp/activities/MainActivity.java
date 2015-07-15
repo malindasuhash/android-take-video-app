@@ -95,14 +95,14 @@ public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
         super.onDestroy();
         // Unregisters broadcast
         LocalBroadcastManager
-                .getInstance(this)
+                .getInstance(this.getApplicationContext())
                 .unregisterReceiver(refreshBroadcastReceiver);
     }
 
     private void registerForBroadcast()
     {
         LocalBroadcastManager
-                .getInstance(this)
+                .getInstance(this.getApplicationContext())
                 .registerReceiver(refreshBroadcastReceiver,
                         new IntentFilter(Constants.RefreshBoardcast));
     }

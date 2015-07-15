@@ -22,7 +22,6 @@ import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.VideoHandler;
 import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
 import mooc.spring.malinda.thevideoapp.utils.NotificationHandler;
-import mooc.spring.malinda.thevideoapp.utils.Toaster;
 import retrofit.client.Response;
 
 public class VideoDownloadService extends IntentService {
@@ -127,7 +126,7 @@ public class VideoDownloadService extends IntentService {
                                         .getContentResolver()
                                         .update(VideoDiaryContract.VideoEntry.CONTENT_URI, values, null,null);
 
-                                NotificationHandler.finishNotification(context, false);
+                                NotificationHandler.finishNotification(context.getApplicationContext(), false);
                             }
                         });
 

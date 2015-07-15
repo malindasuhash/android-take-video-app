@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import mooc.spring.malinda.thevideoapp.framework.Constants;
+import mooc.spring.malinda.thevideoapp.operations.BroadcastRefresh;
 import mooc.spring.malinda.thevideoapp.operations.Video;
 import mooc.spring.malinda.thevideoapp.operations.VideoHandler;
 import mooc.spring.malinda.thevideoapp.operations.VideoStorageHandler;
@@ -76,13 +77,15 @@ public class VideoUploaderService extends IntentService {
                 return;
             }
 
+            Log.i(Constants.TAG, "Now update the UI");
+
             mStorage.store(this.getApplicationContext(), video.getName(),
                     metaDto.getDataUrl(), video.getRating(), video.getDuration(),
                     video.getVideoId(), Long.toString(localVideoId));
 
-            Toaster.Show(this.getApplicationContext(), "Saved Uploaded to the server.");
+            NotificationHandler.finishNotification(this.getApplicationContext(), true);
 
-            NotificationHandler.finishNotification(this, true);
+            BroadcastRefresh.broadcastRefresh(this.getApplicationContext());
         }
     }
 }
