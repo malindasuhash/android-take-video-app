@@ -4,6 +4,8 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.support.v4.app.NotificationCompat;
 
+import mooc.spring.malinda.thevideoapp.operations.BroadcastRefresh;
+
 public class NotificationHandler {
 
     private static int NOTIFICATION_ID = 1;
@@ -39,7 +41,7 @@ public class NotificationHandler {
                 .setProgress(0,
                         0,
                         false)
-                .setSmallIcon(android.R.drawable.stat_sys_upload_done)
+                .setSmallIcon(isUpload ? android.R.drawable.stat_sys_upload_done : android.R.drawable.stat_sys_download_done)
                 .setContentText("")
                 .setTicker(isUpload ? "Upload complete!!" : "Download complete!!");
 
@@ -49,5 +51,8 @@ public class NotificationHandler {
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotifyManager.notify(NOTIFICATION_ID,
                 mBuilder.build());
+
+        // Now refresh the UI.
+        BroadcastRefresh.broadcastRefresh(context);
     }
 }

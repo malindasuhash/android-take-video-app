@@ -21,4 +21,6 @@ public class Constants {
     public static final String OldVideoId = "oldVideoId";
 
     public static final String ServerRating = "serverRating";
+
+    public static final String RefreshBoardcast = "myvideo.broadcast.videos.refresh";
 }

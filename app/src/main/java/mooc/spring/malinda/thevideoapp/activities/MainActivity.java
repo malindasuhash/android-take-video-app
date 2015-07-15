@@ -1,7 +1,12 @@
 package mooc.spring.malinda.thevideoapp.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,11 +15,14 @@ import android.widget.ListView;
 
 import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.ConfigurationHandledActivity;
+import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.VideoOps;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
 
 public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
+
+    private RefreshBroadcastReceiver refreshBroadcastReceiver = new RefreshBroadcastReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +30,7 @@ public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
         setContentView(R.layout.activity_main);
         setListViewClick();
         super.handleConfiguration(VideoOps.class);
+        registerForBroadcast();
     }
 
     @Override
@@ -79,5 +88,36 @@ public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         this.mOps.whenTakingVideoCompletes(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Unregisters broadcast
+        LocalBroadcastManager
+                .getInstance(this)
+                .unregisterReceiver(refreshBroadcastReceiver);
+    }
+
+    private void registerForBroadcast()
+    {
+        LocalBroadcastManager
+                .getInstance(this)
+                .registerReceiver(refreshBroadcastReceiver,
+                        new IntentFilter(Constants.RefreshBoardcast));
+    }
+
+    /**
+     * Simple broadcast receiver to reload the video list.
+     */
+    public class RefreshBroadcastReceiver extends BroadcastReceiver {
+        public RefreshBroadcastReceiver() {
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i(Constants.TAG, "Request to refresh video list received.");
+            mOps.getVideoList();
+        }
     }
 }

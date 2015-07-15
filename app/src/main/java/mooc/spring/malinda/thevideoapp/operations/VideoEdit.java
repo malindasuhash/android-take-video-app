@@ -87,7 +87,7 @@ public class VideoEdit implements OpsConfig {
         info.setNewRatings(newRating);
         info.setServerVideoId(serverVideoId);
 
-        UpdateRatingsTask task = new UpdateRatingsTask();
+        UpdateRatingsTask task = new UpdateRatingsTask(mActivity.get());
         task.execute(info);
 
         Toaster.Show(mActivity.get(), "Updating Video ratings in the server.");

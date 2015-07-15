@@ -12,7 +12,7 @@
     <uses-permission android:name="video.diary.simple.READ" />
     <uses-permission android:name="video.diary.simple.WRITE" />
 
-    <permission android:name="video.diary.simple.WRITE"></permission>
+    <permission android:name="video.diary.simple.WRITE" />
 
     <application
         android:allowBackup="true"
@@ -56,11 +56,17 @@
         <service
             android:name=".services.VideoDownloadService"
             android:enabled="true"
+            android:exported="false"
             android:grantUriPermissions="true"
             android:readPermission="video.diary.simple.READ"
-            android:writePermission="video.diary.simple.WRITE"
-            android:exported="false" >
+            android:writePermission="video.diary.simple.WRITE" >
         </service>
+
+        <receiver
+            android:name=".activities.MainActivity$RefreshBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false" >
+        </receiver>
     </application>
 
 </manifest>
