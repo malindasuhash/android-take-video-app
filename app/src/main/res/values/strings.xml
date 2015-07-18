@@ -18,4 +18,5 @@
     <string name="download_video">Download video</string>
     <string name="remove_video">Delete Video from Local store</string>
     <string name="no_vid">Sorry, this video does not exist locally. Please download it from Server.</string>
+    <string name="menu_add_video">Add Video</string>
 </resources>
