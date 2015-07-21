@@ -76,13 +76,6 @@ public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
             }
         });
     }
-    /**
-     * Invokes the intent to open the build in camera to take the video.
-     */
-    public void takeVideo(View view)
-    {
-        this.mOps.takeVideo();
-    }
 
     /**
         Delegates the call to operations to validate and do the bits.
