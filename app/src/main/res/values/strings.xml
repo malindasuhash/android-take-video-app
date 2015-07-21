@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">The Video App!</string>
+    <string name="app_name">Little Video Diary</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Source</string>

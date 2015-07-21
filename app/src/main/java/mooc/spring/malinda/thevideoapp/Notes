@@ -1,0 +1,13 @@
+
+21/07/2015
+The database
+
+// Current
+ID, Title, Duration, ContentType, DataUrl, Star_rating, Video_id, Local_video_id
+
+// Proposed
+-- VideoDiary
+Id, Title, Created, ContentType, LocalUri, StarRating
+
+-- VideoQueue
+Id, VideoRef, IsUpload, IsComplete, Attempts

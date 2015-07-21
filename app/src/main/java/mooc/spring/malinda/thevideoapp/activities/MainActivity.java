@@ -18,6 +18,7 @@ import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.ConfigurationHandledActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.VideoOps;
+import mooc.spring.malinda.thevideoapp.utils.L;
 
 
 public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
@@ -52,6 +53,13 @@ public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
             Intent showSource = new Intent(Intent.ACTION_VIEW);
             showSource.setData(Uri.parse("https://github.com/malindasuhash/android-take-video-app"));
             startActivity(showSource); // No need to check
+            return true;
+        }
+
+        if (id == R.id.add_video)
+        {
+            L.logI("Ready to take a video. Creating intent to open built in video app.");
+            this.mOps.takeVideo();
             return true;
         }
 
