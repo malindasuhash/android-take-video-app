@@ -20,12 +20,21 @@
         android:id="@+id/imageView2"
         android:src="@drawable/ic_collections_white_48dp"
         android:layout_gravity="center_horizontal"
-        android:baselineAlignBottom="true" />
+        android:baselineAlignBottom="true"
+        android:visibility="gone" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_vids"
         android:id="@+id/textView6"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar2"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp" />
 </LinearLayout>
