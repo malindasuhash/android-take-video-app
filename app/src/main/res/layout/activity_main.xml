@@ -7,18 +7,25 @@
     android:orientation="vertical">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/video_list"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal|left"
-        android:paddingTop="10dp" />
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listView"
-        android:paddingTop="10dp" />
+        android:paddingTop="10dp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:layout_width="101dp"
+        android:layout_height="146dp"
+        android:id="@+id/imageView2"
+        android:src="@drawable/ic_collections_white_48dp"
+        android:layout_gravity="center_horizontal"
+        android:baselineAlignBottom="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_vids"
+        android:id="@+id/textView6"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>

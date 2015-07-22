@@ -29,6 +29,7 @@ public class SqlDbHelper extends SQLiteOpenHelper {
                 + VideoDiaryContract.VideoEntry.COLUMN_DURATION + " TEXT, "
                 + VideoDiaryContract.VideoEntry.COLUMN_CONTENT_TYPE + " TEXT, "
                 + VideoDiaryContract.VideoEntry.COLUMN_DATA_URL + " TEXT, "
+                + VideoDiaryContract.VideoEntry.COLUMN_TAGS + " TEXT, "
                 + VideoDiaryContract.VideoEntry.COLUMN_STAR_RATING + " REAL, "
                 + VideoDiaryContract.VideoEntry.COLUMN_VIDEO_ID + " INTEGER, "
                 + VideoDiaryContract.VideoEntry.COLUMN_LOCAL_VIDEO_ID + " INTEGER "

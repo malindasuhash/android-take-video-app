@@ -11,3 +11,12 @@ Id, Title, Created, ContentType, LocalUri, StarRating
 
 -- VideoQueue
 Id, VideoRef, IsUpload, IsComplete, Attempts
+
+
+
+Activities
+- Added an icon to trigger "add video" = done
+- Removed "take a video" button. = done
+- Show "no videos" message when there are no videos to show.
+- Test for rotation in video list
+- Add a button to switch to grid with videos

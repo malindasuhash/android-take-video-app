@@ -43,12 +43,8 @@ public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent showSource = new Intent(Intent.ACTION_VIEW);
             showSource.setData(Uri.parse("https://github.com/malindasuhash/android-take-video-app"));
