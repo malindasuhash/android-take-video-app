@@ -62,6 +62,28 @@ public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Shows the list of videos.
+     */
+    public void showVideoList()
+    {
+        findViewById(R.id.loading).setVisibility(View.GONE);
+        findViewById(R.id.novideosImg).setVisibility(View.GONE);
+        findViewById(R.id.vovidsmsg).setVisibility(View.GONE);
+        findViewById(R.id.listView).setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * No videos found, therefore showing the no videos image and text.
+     */
+    public void noVideosFound()
+    {
+        findViewById(R.id.loading).setVisibility(View.GONE);
+        findViewById(R.id.novideosImg).setVisibility(View.VISIBLE);
+        findViewById(R.id.vovidsmsg).setVisibility(View.VISIBLE);
+        findViewById(R.id.listView).setVisibility(View.GONE);
+    }
+
     public void setListViewClick()
     {
         ListView listView = (ListView)findViewById(R.id.listView);
