@@ -35,7 +35,7 @@ public class StoredVideosQuery {
                              null,
                              null,
                              null,
-                             " ORDER BY created_date_time DESC ")) {
+                             " created_date_time ")) {
             if (cursor.moveToFirst())
             {
                 while (!cursor.isAfterLast()) {

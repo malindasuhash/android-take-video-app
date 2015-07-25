@@ -24,6 +24,7 @@ public class VideoDiaryContentProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
+        // Need to check whether its a single or multiple.
         return VideoDiaryContract.VideoEntry.CONTENT_ITEM_TYPE;
     }
 
@@ -64,9 +65,9 @@ public class VideoDiaryContentProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
 
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
-        return db.query(VideoDiaryContract.VideoEntry.TABLE_NAME, null, null, null, null, null, null);
+        return db.query(VideoDiaryContract.VideoEntry.TABLE_NAME, null, null, null, null, null, sortOrder);
     }
 
     @Override
