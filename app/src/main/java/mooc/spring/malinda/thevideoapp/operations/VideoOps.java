@@ -7,7 +7,9 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
@@ -29,6 +31,9 @@ public class VideoOps implements OpsConfig, CanShowAllVideos {
 
     private WeakReference<Activity> mActivity;
     private WeakReference<ListView> mVideoList;
+    private WeakReference<ProgressBar> mProgressBar;
+    private WeakReference<ImageView> mNoImage;
+    private WeakReference<TextView> mNoImageValue;
     private VideoAdapter mAdapter;
 
     /**
@@ -85,6 +90,9 @@ public class VideoOps implements OpsConfig, CanShowAllVideos {
 
         mActivity = new WeakReference<>(activity);
         mVideoList = new WeakReference<>((ListView)getActivity().findViewById(R.id.listView));
+        mProgressBar = new WeakReference<>((ProgressBar)getActivity().findViewById(R.id.loading));
+        mNoImage = new WeakReference<>((ImageView)getActivity().findViewById(R.id.novideosImg));
+        mNoImageValue = new WeakReference<>((TextView)getActivity().findViewById(R.id.vovidsmsg));
 
         if (firstTimeIn) {
             mAdapter = new VideoAdapter(getActivity().getApplicationContext());
@@ -105,6 +113,7 @@ public class VideoOps implements OpsConfig, CanShowAllVideos {
 
     public void getVideoList()
     {
+        mProgressBar.get().setVisibility(View.VISIBLE);
         LoadAllVideosTask allVideosTask = new LoadAllVideosTask();
         LoadVideoListTask task = new LoadVideoListTask();
         LoadDataDto data = new LoadDataDto();
@@ -126,5 +135,21 @@ public class VideoOps implements OpsConfig, CanShowAllVideos {
     @Override
     public void setVideoData(List<VideoInfo> videoData) {
         L.logI("Callback from loading video data.");
+
+        mProgressBar.get().setVisibility(View.GONE);
+
+        if (videoData.size()  == 0)
+        {
+            L.logI("There are no videos to show!");
+            mNoImage.get().setVisibility(View.VISIBLE);
+            mNoImageValue.get().setVisibility(View.VISIBLE);
+            mVideoList.get().setVisibility(View.INVISIBLE);
+        } else
+        {
+            L.logI("Videos found!");
+            mNoImage.get().setVisibility(View.GONE);
+            mNoImageValue.get().setVisibility(View.GONE);
+            mVideoList.get().setVisibility(View.VISIBLE);
+        }
     }
 }
