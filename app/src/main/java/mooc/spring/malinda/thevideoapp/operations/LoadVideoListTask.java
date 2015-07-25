@@ -12,12 +12,12 @@ import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
 /**
  * Task to load the data from local media store.
  */
-public class LoadVideoListTask extends AsyncTask<LoadData, Void, List<VideoDecorator>> {
+public class LoadVideoListTask extends AsyncTask<LoadDataDto, Void, List<VideoDecorator>> {
 
-    private LoadData loadData;
+    private LoadDataDto loadData;
 
     @Override
-    protected List<VideoDecorator> doInBackground(LoadData... data) {
+    protected List<VideoDecorator> doInBackground(LoadDataDto... data) {
         loadData = data[0];
         MediaStoreFacade facade = new MediaStoreFacade(loadData.getContext().getApplicationContext());
         return facade.getVideos(VideoDiaryContract.VideoEntry.CONTENT_URI);

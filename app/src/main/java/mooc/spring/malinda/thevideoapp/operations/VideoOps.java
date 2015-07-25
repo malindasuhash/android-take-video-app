@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.activities.EditVideoDetailsActivity;
@@ -18,9 +19,11 @@ import mooc.spring.malinda.thevideoapp.activities.MainActivity;
 import mooc.spring.malinda.thevideoapp.activities.VideoDetailsActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.framework.OpsConfig;
+import mooc.spring.malinda.thevideoapp.operations.tasks.LoadAllVideosTask;
+import mooc.spring.malinda.thevideoapp.utils.L;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
-public class VideoOps implements OpsConfig {
+public class VideoOps implements OpsConfig, CanShowAllVideos {
 
     private static final int REQUEST_VIDEO_CAPTURE = 1;
 
@@ -102,12 +105,15 @@ public class VideoOps implements OpsConfig {
 
     public void getVideoList()
     {
+        LoadAllVideosTask allVideosTask = new LoadAllVideosTask();
         LoadVideoListTask task = new LoadVideoListTask();
-        LoadData data = new LoadData();
+        LoadDataDto data = new LoadDataDto();
         data.setContext(getActivity());
         data.setAdapter(mAdapter);
+        data.setCanShowAllVideos(this);
 
         task.execute(data);
+        allVideosTask.execute(data);
 
         Log.i(Constants.TAG, "Loading videos, through the task.");
     }
@@ -115,5 +121,10 @@ public class VideoOps implements OpsConfig {
     private MainActivity getActivity()
     {
         return (MainActivity)mActivity.get();
+    }
+
+    @Override
+    public void setVideoData(List<VideoInfo> videoData) {
+        L.logI("Callback from loading video data.");
     }
 }

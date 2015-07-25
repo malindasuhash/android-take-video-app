@@ -15,26 +15,27 @@
         android:visibility="gone" />
 
     <ImageView
-        android:layout_width="101dp"
-        android:layout_height="146dp"
-        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/novideosImg"
         android:src="@drawable/ic_collections_white_48dp"
         android:layout_gravity="center_horizontal"
         android:baselineAlignBottom="true"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_vids"
-        android:id="@+id/textView6"
+        android:id="@+id/vovidsmsg"
         android:layout_gravity="center_horizontal"
         android:visibility="gone" />
 
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/progressBar2"
+        android:id="@+id/loading"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp" />
 </LinearLayout>

@@ -2,9 +2,11 @@ package mooc.spring.malinda.thevideoapp.operations;
 
 import android.content.Context;
 
-public class LoadData {
+public class LoadDataDto {
+
     private Context context;
     private VideoAdapter adapter;
+    private CanShowAllVideos canShowAllVideos;
 
     public Context getContext() {
         return context;
@@ -20,5 +22,13 @@ public class LoadData {
 
     public void setAdapter(VideoAdapter adapter) {
         this.adapter = adapter;
+    }
+
+    public void setCanShowAllVideos(CanShowAllVideos canShowAllVideos) {
+        this.canShowAllVideos = canShowAllVideos;
+    }
+
+    public CanShowAllVideos getCanShowAllVideos() {
+        return canShowAllVideos;
     }
 }
