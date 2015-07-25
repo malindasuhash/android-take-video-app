@@ -4,8 +4,8 @@ import android.os.AsyncTask;
 
 import java.util.List;
 
-import mooc.spring.malinda.thevideoapp.operations.LoadDataDto;
-import mooc.spring.malinda.thevideoapp.operations.VideoInfo;
+import mooc.spring.malinda.thevideoapp.operations.dtos.LoadDataDto;
+import mooc.spring.malinda.thevideoapp.operations.models.VideoInfo;
 import mooc.spring.malinda.thevideoapp.quries.StoredVideosQuery;
 import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
 import mooc.spring.malinda.thevideoapp.utils.L;

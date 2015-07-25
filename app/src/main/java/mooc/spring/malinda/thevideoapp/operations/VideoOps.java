@@ -19,6 +19,8 @@ import mooc.spring.malinda.thevideoapp.activities.MainActivity;
 import mooc.spring.malinda.thevideoapp.activities.VideoDetailsActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.framework.OpsConfig;
+import mooc.spring.malinda.thevideoapp.operations.dtos.LoadDataDto;
+import mooc.spring.malinda.thevideoapp.operations.models.VideoInfo;
 import mooc.spring.malinda.thevideoapp.operations.tasks.LoadAllVideosTask;
 import mooc.spring.malinda.thevideoapp.utils.L;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mooc.spring.malinda.thevideoapp.framework.Constants;
+import mooc.spring.malinda.thevideoapp.operations.dtos.LoadDataDto;
 import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
 
 /**

@@ -1,4 +1,4 @@
-package mooc.spring.malinda.thevideoapp.operations;
+package mooc.spring.malinda.thevideoapp.operations.models;
 
 import java.util.Date;
 

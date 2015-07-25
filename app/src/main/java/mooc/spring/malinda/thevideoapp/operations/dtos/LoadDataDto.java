@@ -1,6 +1,9 @@
-package mooc.spring.malinda.thevideoapp.operations;
+package mooc.spring.malinda.thevideoapp.operations.dtos;
 
 import android.content.Context;
+
+import mooc.spring.malinda.thevideoapp.operations.CanShowAllVideos;
+import mooc.spring.malinda.thevideoapp.operations.VideoAdapter;
 
 public class LoadDataDto {
 

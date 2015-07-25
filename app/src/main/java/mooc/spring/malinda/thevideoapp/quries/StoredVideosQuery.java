@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mooc.spring.malinda.thevideoapp.framework.Constants;
-import mooc.spring.malinda.thevideoapp.operations.VideoInfo;
+import mooc.spring.malinda.thevideoapp.operations.models.VideoInfo;
 import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
 
 /**
