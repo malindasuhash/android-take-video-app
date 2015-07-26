@@ -8,15 +8,28 @@
     tools:context="mooc.spring.malinda.thevideoapp.activities.VideoDetailsActivity"
     android:weightSum="1">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageView" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/play"
+            android:src="@drawable/ic_play_circle_outline_white_48dp"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <Button
             android:layout_width="wrap_content"
@@ -40,8 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/size"
-        android:layout_marginLeft="20dp" />
+        android:id="@+id/size" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -73,6 +85,8 @@
         android:numStars="5"
         android:rating="1"
         android:onClick="ratingChanged" />
+
+
 
     <Button
         android:layout_width="match_parent"

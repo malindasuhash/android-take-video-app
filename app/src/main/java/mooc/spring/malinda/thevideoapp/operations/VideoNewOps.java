@@ -18,9 +18,10 @@ import mooc.spring.malinda.thevideoapp.activities.VideoDetailsActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.framework.OpsConfig;
 import mooc.spring.malinda.thevideoapp.services.TaskData;
+import mooc.spring.malinda.thevideoapp.utils.L;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
-public class VideoDetailsOps implements OpsConfig {
+public class VideoNewOps implements OpsConfig {
 
     private WeakReference<Activity> mActivity;
     private WeakReference<RatingBar> mRatings;
@@ -41,9 +42,9 @@ public class VideoDetailsOps implements OpsConfig {
      */
     public void loadVideoData(Intent data)
     {
-        long videoId = data.getLongExtra("videoId", 0);
+        long videoId = data.getLongExtra(Constants.VideoId, 0);
 
-        Log.i(Constants.TAG, "Video id from intent " + videoId);
+        L.logI("Video id from intent " + videoId);
         mVideoId = videoId;
 
         this.mFilePath = mFacade.getVideoFilePath(videoId);

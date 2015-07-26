@@ -9,9 +9,9 @@ import android.view.View;
 import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.ConfigurationHandledActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
-import mooc.spring.malinda.thevideoapp.operations.VideoDetailsOps;
+import mooc.spring.malinda.thevideoapp.operations.VideoNewOps;
 
-public class VideoDetailsActivity extends ConfigurationHandledActivity<VideoDetailsOps> {
+public class VideoDetailsActivity extends ConfigurationHandledActivity<VideoNewOps> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class VideoDetailsActivity extends ConfigurationHandledActivity<VideoDeta
 
         Log.i(Constants.TAG, "Loading video details");
 
-        super.handleConfiguration(VideoDetailsOps.class);
+        super.handleConfiguration(VideoNewOps.class);
 
         mOps.loadVideoData(getIntent());
     }
