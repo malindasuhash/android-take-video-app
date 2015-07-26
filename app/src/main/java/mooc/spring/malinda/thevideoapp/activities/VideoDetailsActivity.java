@@ -1,5 +1,7 @@
 package mooc.spring.malinda.thevideoapp.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,6 +45,17 @@ public class VideoDetailsActivity extends ConfigurationHandledActivity<VideoDeta
     public void ratingChanged(View view)
     {
         mOps.ratingChanged();
+    }
+
+    /**
+     * Creates an explicit intent for the caller to use this activity.
+     */
+    public static Intent makeIntent(Context context, long videoId)
+    {
+        Intent showDetails = new Intent(context, VideoDetailsActivity.class);
+        showDetails = showDetails.putExtra(Constants.VideoId, videoId);
+
+        return showDetails;
     }
 
 }

@@ -23,7 +23,6 @@ import mooc.spring.malinda.thevideoapp.operations.dtos.LoadDataDto;
 import mooc.spring.malinda.thevideoapp.operations.models.VideoInfo;
 import mooc.spring.malinda.thevideoapp.operations.tasks.LoadAllVideosTask;
 import mooc.spring.malinda.thevideoapp.utils.L;
-import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
 public class VideoOps implements OpsConfig, CanShowAllVideos {
 
@@ -64,7 +63,7 @@ public class VideoOps implements OpsConfig, CanShowAllVideos {
             showVideoDetails(videoId);
         }
         else {
-            Toaster.Show(getActivity(), "Sorry looks like the video was cancelled :(");
+            L.logI("Looks like the video was cancelled by user.");
         }
     }
 
@@ -100,10 +99,9 @@ public class VideoOps implements OpsConfig, CanShowAllVideos {
 
     private void showVideoDetails(long id)
     {
-        Log.i(Constants.TAG, "Showing the video details");
+        L.logI("Showing the video details");
 
-        Intent showDetails = new Intent(getActivity(), VideoDetailsActivity.class);
-        showDetails = showDetails.putExtra("videoId", id);
+        Intent showDetails = VideoDetailsActivity.makeIntent(getActivity().getApplicationContext(), id);
         getActivity().startActivity(showDetails);
     }
 
