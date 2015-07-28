@@ -17,11 +17,14 @@ import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.activities.VideoDetailsActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.framework.OpsConfig;
+import mooc.spring.malinda.thevideoapp.operations.dtos.LoadDataDto;
+import mooc.spring.malinda.thevideoapp.operations.models.MediaStoreVideo;
+import mooc.spring.malinda.thevideoapp.operations.tasks.NewVideoDetailsTask;
 import mooc.spring.malinda.thevideoapp.services.TaskData;
 import mooc.spring.malinda.thevideoapp.utils.L;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
-public class VideoNewOps implements OpsConfig {
+public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails {
 
     private WeakReference<Activity> mActivity;
     private WeakReference<RatingBar> mRatings;
@@ -43,6 +46,13 @@ public class VideoNewOps implements OpsConfig {
     public void loadVideoData(Intent data)
     {
         long videoId = data.getLongExtra(Constants.VideoId, 0);
+
+        NewVideoDetailsTask task = new NewVideoDetailsTask();
+        LoadDataDto dataDto = new LoadDataDto();
+        dataDto.setContext(getActivity().getApplicationContext());
+        dataDto.setCanSetNewVideoDetails(this);
+        dataDto.setVideoId(videoId);
+        task.execute(dataDto);
 
         L.logI("Video id from intent " + videoId);
         mVideoId = videoId;
@@ -166,5 +176,10 @@ public class VideoNewOps implements OpsConfig {
         {
             mRatings.get().setRating(mCurrentRating);
         }
+    }
+
+    @Override
+    public void setNewVideoDetails(MediaStoreVideo mediaStoreVideo) {
+        L.logI("Setting new video details callback.");
     }
 }

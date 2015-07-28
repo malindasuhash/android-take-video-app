@@ -1,5 +1,7 @@
 package mooc.spring.malinda.thevideoapp.operations.models;
 
+import android.graphics.Bitmap;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -13,6 +15,7 @@ public class MediaStoreVideo {
     private String mimeType;
     private long dateTaken;
     private String location;
+    private Bitmap thumbnail;
 
     public String getName() {
         return name;
@@ -56,5 +59,13 @@ public class MediaStoreVideo {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Bitmap getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(Bitmap thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }
