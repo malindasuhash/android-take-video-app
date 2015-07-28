@@ -37,12 +37,46 @@ public class VideoMediaStoreQuery {
             if (cursor.moveToFirst())
                 // Get the Video metadata from Android Video Content
                 // Provider
-                return null;
-                //return getVideo(cursor);
+                return getVideo(cursor);
             else
                 // Return null if there id no row returned by the
                 // Query.
                 return null;
         }
+    }
+
+    private MediaStoreVideo getVideo(Cursor cursor)
+    {
+        // Get the Name of the Video, which is "videoName.mp4"
+        String name =
+                cursor.getString
+                        (cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME));
+
+        // Get the Duration of the video.
+        long duration =
+                cursor.getLong
+                        (cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
+
+        // Get the MIME_TYPE of the video.
+        String contentType =
+                cursor.getString
+                        (cursor.getColumnIndexOrThrow(MediaStore.Video.Media.MIME_TYPE));
+
+        long dateTaken =
+                cursor.getLong
+                        (cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATE_TAKEN));
+
+        String location = cursor.getString
+                (cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA));
+
+        MediaStoreVideo video = new MediaStoreVideo();
+        video.setName(name);
+        video.setDuration(duration);
+        video.setMimeType(contentType);
+        video.setDateTaken(dateTaken);
+        video.setLocation(location);
+
+        return video;
+
     }
 }

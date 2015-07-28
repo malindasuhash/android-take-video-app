@@ -10,6 +10,7 @@ public class LoadDataDto {
     private Context context;
     private VideoAdapter adapter;
     private CanShowAllVideos canShowAllVideos;
+    private long videoId;
 
     public Context getContext() {
         return context;
@@ -33,5 +34,13 @@ public class LoadDataDto {
 
     public CanShowAllVideos getCanShowAllVideos() {
         return canShowAllVideos;
+    }
+
+    public long getVideoId() {
+        return videoId;
+    }
+
+    public void setVideoId(long videoId) {
+        this.videoId = videoId;
     }
 }
