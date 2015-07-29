@@ -28,34 +28,73 @@
             android:onClick="playVideo" />
     </FrameLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
+    <TableLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/video_size"
-        android:id="@+id/textView2"
-        />
+        android:layout_gravity="center_horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/size" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:measureWithLargestChild="false"
+            android:showDividers="beginning"
+            android:id="@+id/new_vid_show">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/file_location"
-        android:id="@+id/textView3"
-         />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/new_vid_title"
+                android:id="@+id/textView6" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/vid_t"
+                android:layout_column="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/lengthOfTitle"
+                android:layout_column="2" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:measureWithLargestChild="false"
+            android:showDividers="beginning" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/vid_description"
+                android:id="@+id/textView3"
+                android:layout_gravity="top"
+                android:gravity="top" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/des_t"
+                android:layout_column="1"
+                android:minLines="3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/desLen"
+                android:layout_column="2" />
+
+        </TableRow>
+    </TableLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -63,23 +102,6 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/location"
         android:layout_marginLeft="20dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/Stars"
-        android:id="@+id/textView4"
-         />
-
-    <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ratings"
-        android:numStars="5"
-        android:rating="1"
-        android:onClick="ratingChanged" />
-
 
 
     <Button

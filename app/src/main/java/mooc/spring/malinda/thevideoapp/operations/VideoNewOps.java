@@ -14,6 +14,7 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 
 import mooc.spring.malinda.thevideoapp.R;
+import mooc.spring.malinda.thevideoapp.activities.CanUpdateInputs;
 import mooc.spring.malinda.thevideoapp.activities.VideoDetailsActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.framework.OpsConfig;
@@ -34,6 +35,16 @@ public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails {
     private MediaStoreFacade mFacade;
     private float mCurrentRating;
     private boolean hasSizeExceeded;
+    private final int MAX_TITLE_LEN = 15;
+    private int currentTitleLen;
+    private final int MAX_DESC_LEN = 30;
+    private int currentDescLen;
+
+    public enum Input
+    {
+        Title,
+        Description
+    }
 
     private VideoDetailsActivity getActivity()
     {
@@ -63,6 +74,22 @@ public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails {
 
         setVideoProperties(videoFile);
         setVideoThumbnail(videoId);
+    }
+
+    public void updateInputLengths(Input input, String current, CanUpdateInputs canUpdateInputs)
+    {
+        if (input == Input.Title)
+        {
+            currentTitleLen = MAX_TITLE_LEN - current.length();
+            canUpdateInputs.updateTitleLengh(currentTitleLen);
+
+        } else
+        {
+            currentDescLen = MAX_DESC_LEN - current.length();
+            canUpdateInputs.updateDescLength(currentDescLen);
+        }
+
+        L.logI("Title " + currentTitleLen + " Desc " + currentDescLen);
     }
 
     /**
@@ -147,20 +174,10 @@ public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails {
             sizeToShow = Long.toString(size) + " MB";
         }
 
-        ((TextView)getActivity().findViewById(R.id.size)).setText(sizeToShow);
-
         if (size >= 50)
         {
             hasSizeExceeded = true;
         }
-    }
-
-    /**
-     * Updates the rating in the operations when it is changed in the UI.
-     */
-    public void ratingChanged()
-    {
-        mCurrentRating = mRatings.get().getRating();
     }
 
     @Override
@@ -171,10 +188,14 @@ public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails {
 
         if (firstTimeIn) {
             mFacade = new MediaStoreFacade(getActivity().getApplicationContext());
-            mRatings.get().setRating(0);
+            ((VideoDetailsActivity)mActivity.get()).updateTitleLengh(MAX_TITLE_LEN);
+            ((VideoDetailsActivity)mActivity.get()).updateDescLength(MAX_DESC_LEN);
+            currentTitleLen = MAX_TITLE_LEN;
+            currentDescLen = MAX_DESC_LEN;
         } else
         {
-            mRatings.get().setRating(mCurrentRating);
+            ((VideoDetailsActivity)mActivity.get()).updateTitleLengh(MAX_TITLE_LEN);
+            ((VideoDetailsActivity)mActivity.get()).updateDescLength(MAX_DESC_LEN);
         }
     }
 

@@ -20,4 +20,6 @@
     <string name="no_vid">Sorry, this video does not exist locally. Please download it from Server.</string>
     <string name="menu_add_video">Add Video</string>
     <string name="no_vids">Sorry no videos founds.</string>
+    <string name="new_vid_title">Title</string>
+    <string name="vid_description">Description</string>
 </resources>
