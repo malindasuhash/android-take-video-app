@@ -22,4 +22,7 @@
     <string name="no_vids">Sorry no videos founds.</string>
     <string name="new_vid_title">Title</string>
     <string name="vid_description">Description</string>
+    <string name="store_locally">Store Video Locally</string>
+    <string name="store_in_cloud">Store in Cloud</string>
+    <string name="remove_vid">Delete Video</string>
 </resources>

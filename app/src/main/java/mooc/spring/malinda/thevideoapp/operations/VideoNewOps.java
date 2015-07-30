@@ -162,8 +162,6 @@ public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails {
 
         Log.i(Constants.TAG, "Size is " + file.length());
 
-        ((TextView) getActivity().findViewById(R.id.location)).setText(file.getPath());
-
         String sizeToShow;
 
         if (size < 1)
