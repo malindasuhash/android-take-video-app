@@ -60,7 +60,7 @@ public class VideoOps implements OpsConfig, CanShowAllVideos {
             Long videoId = ContentUris.parseId(videoUri);
             Log.i(Constants.TAG, "We have a recorded video. Uri is " + videoUri + "; id is " + videoId);
 
-            showVideoDetails(videoId);
+            showVideoDetails(videoId, videoUri);
         }
         else {
             L.logI("Looks like the video was cancelled by user.");
@@ -97,11 +97,11 @@ public class VideoOps implements OpsConfig, CanShowAllVideos {
         setLoadState();
     }
 
-    private void showVideoDetails(long id)
+    private void showVideoDetails(long id, Uri videoUri)
     {
         L.logI("Showing the video details");
 
-        Intent showDetails = VideoDetailsActivity.makeIntent(getActivity().getApplicationContext(), id);
+        Intent showDetails = VideoDetailsActivity.makeIntent(getActivity().getApplicationContext(), id, videoUri);
         getActivity().startActivity(showDetails);
     }
 

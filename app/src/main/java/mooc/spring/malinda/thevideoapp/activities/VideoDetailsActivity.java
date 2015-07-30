@@ -2,18 +2,21 @@ package mooc.spring.malinda.thevideoapp.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.ConfigurationHandledActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.VideoNewOps;
+import mooc.spring.malinda.thevideoapp.operations.models.MediaStoreVideo;
 
 public class VideoDetailsActivity extends ConfigurationHandledActivity<VideoNewOps> implements CanUpdateInputs {
 
@@ -25,8 +28,6 @@ public class VideoDetailsActivity extends ConfigurationHandledActivity<VideoNewO
         Log.i(Constants.TAG, "Loading video details");
 
         super.handleConfiguration(VideoNewOps.class);
-
-        mOps.loadVideoData(getIntent());
 
         bindTextChangedEvents();
     }
@@ -46,6 +47,18 @@ public class VideoDetailsActivity extends ConfigurationHandledActivity<VideoNewO
     {
         mOps.storeDetailsAnduploadVideo();
         finish();
+    }
+
+    /**
+     * Sets the video details
+     */
+    public void setImageInfo(MediaStoreVideo mediaStoreVideo)
+    {
+        ImageView imageView = (ImageView) this.findViewById(R.id.imageView);
+        imageView.setImageBitmap(mediaStoreVideo.getThumbnail());
+
+        // Need to comeback to this. Duration is wrong.
+        //((TextView)findViewById(R.id.vidDuration)).setText(mediaStoreVideo.getDuration());
     }
 
     private void bindTextChangedEvents()
@@ -86,10 +99,11 @@ public class VideoDetailsActivity extends ConfigurationHandledActivity<VideoNewO
     /**
      * Creates an explicit intent for the caller to use this activity.
      */
-    public static Intent makeIntent(Context context, long videoId)
+    public static Intent makeIntent(Context context, long videoId, Uri videoUri)
     {
         Intent showDetails = new Intent(context, VideoDetailsActivity.class);
-        showDetails = showDetails.putExtra(Constants.VideoId, videoId);
+        showDetails.putExtra(Constants.VideoId, videoId);
+        showDetails.putExtra(Constants.VideoUri, videoUri.toString());
 
         return showDetails;
     }

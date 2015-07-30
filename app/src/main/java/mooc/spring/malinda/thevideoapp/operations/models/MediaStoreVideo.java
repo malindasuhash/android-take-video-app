@@ -23,7 +23,7 @@ public class MediaStoreVideo {
 
     public String getDuration() {
         float seconds = duration / 1000; // to seconds.
-        return Float.toString(seconds);
+        return Float.toString(seconds) + "s";
     }
 
     public String getMimeType() {
