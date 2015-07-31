@@ -26,4 +26,8 @@
     <string name="store_in_cloud">Store in Cloud</string>
     <string name="remove_vid">Delete Video</string>
     <string name="marked_removal">Video has been marked for removal.</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="del_video">Delete video</string>
+    <string name="sure_to_remove">Are you sure to delete video?</string>
 </resources>

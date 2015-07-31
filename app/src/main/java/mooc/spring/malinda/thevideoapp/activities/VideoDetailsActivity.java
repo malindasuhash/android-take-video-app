@@ -17,7 +17,7 @@ import mooc.spring.malinda.thevideoapp.framework.ConfigurationHandledActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.VideoNewOps;
 import mooc.spring.malinda.thevideoapp.operations.models.MediaStoreVideo;
-import mooc.spring.malinda.thevideoapp.utils.Toaster;
+import mooc.spring.malinda.thevideoapp.utils.Dialoger;
 
 public class VideoDetailsActivity extends ConfigurationHandledActivity<VideoNewOps> implements CanUpdateInputs {
 
@@ -46,9 +46,8 @@ public class VideoDetailsActivity extends ConfigurationHandledActivity<VideoNewO
      */
     public void removeVideo(View view)
     {
-        mOps.removeVideoLocally();
-        Toaster.Show(this, getString(R.string.marked_removal));
-        finish();
+        Dialoger dialoger = new Dialoger();
+        dialoger.show(this, getString(R.string.sure_to_remove), getString(R.string.del_video), mOps);
     }
 
     /**

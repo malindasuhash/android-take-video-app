@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
+import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.activities.CanUpdateInputs;
 import mooc.spring.malinda.thevideoapp.activities.VideoDetailsActivity;
 import mooc.spring.malinda.thevideoapp.commands.RemoveVideoLocalCommand;
@@ -15,10 +16,11 @@ import mooc.spring.malinda.thevideoapp.framework.OpsConfig;
 import mooc.spring.malinda.thevideoapp.operations.dtos.LoadDataDto;
 import mooc.spring.malinda.thevideoapp.operations.models.MediaStoreVideo;
 import mooc.spring.malinda.thevideoapp.operations.tasks.NewVideoDetailsTask;
+import mooc.spring.malinda.thevideoapp.utils.DialogInfo;
 import mooc.spring.malinda.thevideoapp.utils.L;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
-public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails {
+public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails, DialogInfo {
 
     private WeakReference<Activity> mActivity;
     private final int MAX_TITLE_LEN = 15;
@@ -27,6 +29,17 @@ public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails {
     private int currentDescLen;
     private MediaStoreVideo mStoredVideo;
     private Uri videoUri;
+
+    @Override
+    public void whenYesClicked() {
+        removeVideoLocally();
+        Toaster.Show(getActivity(), getActivity().getString(R.string.marked_removal));
+        getActivity().finish();
+    }
+
+    @Override
+    public void whenCancelClicked() {
+    }
 
     public enum Input
     {
