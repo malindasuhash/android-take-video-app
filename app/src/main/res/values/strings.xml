@@ -25,4 +25,5 @@
     <string name="store_locally">Store Video Locally</string>
     <string name="store_in_cloud">Store in Cloud</string>
     <string name="remove_vid">Delete Video</string>
+    <string name="marked_removal">Video has been marked for removal.</string>
 </resources>

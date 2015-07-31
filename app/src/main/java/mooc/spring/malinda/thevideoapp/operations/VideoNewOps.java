@@ -4,13 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.RatingBar;
 
 import java.lang.ref.WeakReference;
 
-import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.activities.CanUpdateInputs;
 import mooc.spring.malinda.thevideoapp.activities.VideoDetailsActivity;
+import mooc.spring.malinda.thevideoapp.commands.RemoveVideoLocalCommand;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.framework.OpsConfig;
 import mooc.spring.malinda.thevideoapp.operations.dtos.LoadDataDto;
@@ -40,7 +39,9 @@ public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails {
         return (VideoDetailsActivity)mActivity.get();
     }
 
-
+    /**
+     * Updates the number of characters in the title and description.
+     */
     public void updateInputLengths(Input input, String current, CanUpdateInputs canUpdateInputs)
     {
         if (input == Input.Title)
@@ -72,6 +73,15 @@ public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails {
         } else {
             Toaster.Show(getActivity(), "Sorry, there isn't any app to play back video.");
         }
+    }
+
+    /**
+     * Removes the video from local store.
+     */
+    public void removeVideoLocally()
+    {
+        RemoveVideoLocalCommand command = new RemoveVideoLocalCommand();
+        command.RemoveVideo(videoUri, getActivity().getApplicationContext());
     }
 
     /**

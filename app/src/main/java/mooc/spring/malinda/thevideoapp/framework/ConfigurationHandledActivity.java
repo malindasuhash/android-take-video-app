@@ -20,21 +20,28 @@ public class ConfigurationHandledActivity<T extends OpsConfig> extends Activity 
         {
             Log.i(Constants.TAG, "First time coming in, initialising operations");
 
-            try {
-                this.mOps = opsType.newInstance();
-                mRetainedFragmentManager.put(Constants.VideoOperations, this.mOps);
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
+            init(opsType);
             this.mOps.onConfiguration(this, true);
         }
         else
         {
             Log.i(Constants.TAG, "Reloading state from fragment manager, reinitialising operations");
             this.mOps = mRetainedFragmentManager.get(Constants.VideoOperations);
+            if (this.mOps == null) {
+               init(opsType);
+            }
             this.mOps.onConfiguration(this, false);
+        }
+    }
+
+    private void init(Class<T> opsType) {
+        try {
+            this.mOps = opsType.newInstance();
+            mRetainedFragmentManager.put(Constants.VideoOperations, this.mOps);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 }

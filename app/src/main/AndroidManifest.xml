@@ -62,6 +62,11 @@
             android:enabled="true"
             android:exported="false" >
         </receiver>
+
+        <service
+            android:name=".services.NewVideoStoreOrRemoveService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>
