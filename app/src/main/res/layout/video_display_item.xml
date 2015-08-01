@@ -32,8 +32,9 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="[new]"
-        android:background="#ff2f88ff"
-        android:id="@+id/textView" />
+        android:background="@android:color/transparent"
+        android:id="@+id/textView"
+        style="@android:style/TextAppearance.Holo.Small" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -41,22 +42,6 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/videoName"
         android:textColor="#ffff5900" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/Stars"
-        android:id="@+id/textView5"
-        android:textColor="#ff2f88ff" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/ratings"
-        android:paddingLeft="10dp"
-        android:textColor="#ffff000c" />
 
     <TextView
         android:layout_width="wrap_content"
