@@ -16,7 +16,7 @@ public class VideoAdapter extends BaseAdapter {
 
     private final Context mContext;
 
-    private static List<Video> videoList = new ArrayList<>();
+    private static List<VideoEx> videoList = new ArrayList<>();
 
     public VideoAdapter(Context context) {
         super();
@@ -26,7 +26,7 @@ public class VideoAdapter extends BaseAdapter {
     public View getView(int position,
                         View convertView,
                         ViewGroup parent) {
-        Video video = videoList.get(position);
+        VideoEx video = videoList.get(position);
 
         if (convertView == null) {
             LayoutInflater mInflater = (LayoutInflater)
@@ -35,14 +35,14 @@ public class VideoAdapter extends BaseAdapter {
                     mInflater.inflate(R.layout.video_display_item,null);
         }
 
-        TextView titleText = (TextView) convertView.findViewById(R.id.videoName);
-        titleText.setText(video.getName());
+        TextView titleText = (TextView) convertView.findViewById(R.id.vidName);
+        titleText.setText(video.getTitle());
 
-        TextView ratings = (TextView) convertView.findViewById(R.id.ratings);
+        /*TextView ratings = (TextView) convertView.findViewById(R.id.ratings);
         ratings.setText(Float.toString(video.getRating()));
 
         TextView ref = (TextView) convertView.findViewById(R.id.vidref);
-        ref.setText(Float.toString(video.getVideoId()));
+        ref.setText(Float.toString(video.getVideoId()));*/
 
         return convertView;
     }
@@ -50,7 +50,7 @@ public class VideoAdapter extends BaseAdapter {
     /**
      * Adds a Video to the Adapter and notify the change.
      */
-    public void add(Video video) {
+    public void add(VideoEx video) {
         videoList.add(video);
         notifyDataSetChanged();
     }
@@ -66,14 +66,14 @@ public class VideoAdapter extends BaseAdapter {
     /**
      * Get the List of Videos from Adapter.
      */
-    public List<Video> getVideos() {
+    public List<VideoEx> getVideos() {
         return videoList;
     }
 
     /**
      * Set the Adapter to list of Videos.
      */
-    public void setVideos(List<Video> videos) {
+    public void setVideos(List<VideoEx> videos) {
         this.videoList = videos;
         notifyDataSetChanged();
     }
@@ -92,7 +92,7 @@ public class VideoAdapter extends BaseAdapter {
     /**
      * Get video from a given position.
      */
-    public Video getItem(int position) {
+    public VideoEx getItem(int position) {
         return videoList.get(position);
     }
 

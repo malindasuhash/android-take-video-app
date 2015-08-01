@@ -20,7 +20,6 @@ import mooc.spring.malinda.thevideoapp.activities.VideoDetailsActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.framework.OpsConfig;
 import mooc.spring.malinda.thevideoapp.operations.dtos.LoadDataDto;
-import mooc.spring.malinda.thevideoapp.operations.models.VideoInfo;
 import mooc.spring.malinda.thevideoapp.operations.tasks.LoadAllVideosTask;
 import mooc.spring.malinda.thevideoapp.utils.L;
 
@@ -108,13 +107,11 @@ public class VideoOps implements OpsConfig, CanShowAllVideos {
     public void getVideoList()
     {
         LoadAllVideosTask allVideosTask = new LoadAllVideosTask();
-        LoadVideoListTask task = new LoadVideoListTask();
         LoadDataDto data = new LoadDataDto();
         data.setContext(getActivity());
         data.setAdapter(mAdapter);
         data.setCanShowAllVideos(this);
 
-        task.execute(data);
         allVideosTask.execute(data);
 
         Log.i(Constants.TAG, "Loading videos, through the task.");
@@ -126,10 +123,12 @@ public class VideoOps implements OpsConfig, CanShowAllVideos {
     }
 
     @Override
-    public void setVideoData(List<VideoInfo> videoData) {
+    public void setVideoData(List<VideoEx> videoData) {
         L.logI("Callback from loading video data. " + videoData.size());
 
         hasVideosToShow = (videoData.size() > 0);
+        mAdapter.setVideos(videoData);
+        setLoadState();
     }
 
     private void setLoadState() {
