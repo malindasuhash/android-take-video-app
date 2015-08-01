@@ -29,11 +29,12 @@ public class VideoDiaryContract {
 
 
         public final static String TABLE_NAME = "VideoDiary";
+        public static String COLUMN_REFERENCE = "reference";
         public static String COLUMN_TITLE = "title";
         public static String COLUMN_DURATION = "duration";
         public static String COLUMN_CONTENT_TYPE = "content_type";
         public static String COLUMN_DATA_URL = "data_url";
-        public static String COLUMN_TAGS = "tags";
+        public static String COLUMN_DESC = "description";
         public static String COLUMN_STAR_RATING = "star_rating";
         public static String COLUMN_VIDEO_ID = "video_id";
         public static String COLUMN_LOCAL_VIDEO_ID = "video_id_local";

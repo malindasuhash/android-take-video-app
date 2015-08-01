@@ -2,9 +2,6 @@ package mooc.spring.malinda.thevideoapp.operations.models;
 
 import android.graphics.Bitmap;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
  * Wrapper around the Media Store video.
  */
@@ -21,9 +18,8 @@ public class MediaStoreVideo {
         return name;
     }
 
-    public String getDuration() {
-        float seconds = duration / 1000; // to seconds.
-        return Float.toString(seconds) + "s";
+    public long getDuration() {
+        return duration;
     }
 
     public String getMimeType() {
@@ -34,11 +30,8 @@ public class MediaStoreVideo {
         this.mimeType = mimeType;
     }
 
-    public String getDateTaken() {
-        Date dte = new Date(dateTaken);
-        String formattedDate = new SimpleDateFormat("yyyy-dd-mm HH:mm:ss").format(dte);
-
-        return formattedDate;
+    public long getDateTaken() {
+        return dateTaken;
     }
 
     public void setDateTaken(long dateTaken) {

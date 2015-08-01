@@ -27,4 +27,6 @@ public class Constants {
     public static final String RefreshBoardcast = "myvideo.broadcast.videos.refresh";
 
     public static final String Remove = "video-remove";
+
+    public static final String Add = "video-add";
 }

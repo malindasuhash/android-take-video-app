@@ -11,7 +11,7 @@ import java.io.File;
  */
 public class SqlDbHelper extends SQLiteOpenHelper {
 
-    private static final int DATABSE_VERSION = 8;
+    private static final int DATABSE_VERSION = 9;
 
     private static final String DATABASE_NAME = "video.diary";
 
@@ -25,15 +25,13 @@ public class SqlDbHelper extends SQLiteOpenHelper {
 
         String query = "CREATE TABLE " + VideoDiaryContract.VideoEntry.TABLE_NAME + " ("
                 + VideoDiaryContract.VideoEntry._ID + " INTEGER PRIMARY KEY, "
+                + VideoDiaryContract.VideoEntry.COLUMN_REFERENCE + " TEXT, "
                 + VideoDiaryContract.VideoEntry.COLUMN_TITLE + " TEXT, "
                 + VideoDiaryContract.VideoEntry.COLUMN_CREATED_DATETIME + " INTEGER, "
                 + VideoDiaryContract.VideoEntry.COLUMN_DURATION + " TEXT, "
                 + VideoDiaryContract.VideoEntry.COLUMN_CONTENT_TYPE + " TEXT, "
-                + VideoDiaryContract.VideoEntry.COLUMN_DATA_URL + " TEXT, "
-                + VideoDiaryContract.VideoEntry.COLUMN_TAGS + " TEXT, "
-                + VideoDiaryContract.VideoEntry.COLUMN_STAR_RATING + " REAL, "
-                + VideoDiaryContract.VideoEntry.COLUMN_VIDEO_ID + " INTEGER, "
-                + VideoDiaryContract.VideoEntry.COLUMN_LOCAL_VIDEO_ID + " INTEGER "
+                + VideoDiaryContract.VideoEntry.COLUMN_DESC + " TEXT, "
+                + VideoDiaryContract.VideoEntry.COLUMN_DATA_URL + " TEXT "
                 + " )";
 
             sqLiteDatabase.execSQL(query);

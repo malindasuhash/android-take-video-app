@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.EditText;
 
 import java.lang.ref.WeakReference;
 
 import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.activities.CanUpdateInputs;
 import mooc.spring.malinda.thevideoapp.activities.VideoDetailsActivity;
+import mooc.spring.malinda.thevideoapp.commands.AddVideoToLocalStoreCommand;
 import mooc.spring.malinda.thevideoapp.commands.RemoveVideoLocalCommand;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.framework.OpsConfig;
@@ -95,6 +97,18 @@ public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails, DialogInfo
     {
         RemoveVideoLocalCommand command = new RemoveVideoLocalCommand();
         command.RemoveVideo(videoUri, getActivity().getApplicationContext());
+    }
+
+    /**
+     * Adds the video information to the database.
+     */
+    public void addVideoToLocalStore()
+    {
+        String title = ((EditText)getActivity().findViewById(R.id.vid_t)).getText().toString();
+        String desc = ((EditText)getActivity().findViewById(R.id.des_t)).getText().toString();
+
+        AddVideoToLocalStoreCommand command = new AddVideoToLocalStoreCommand();
+        command.addVideo(mActivity.get().getApplicationContext(), title, desc, videoUri, mStoredVideo);
     }
 
     /**

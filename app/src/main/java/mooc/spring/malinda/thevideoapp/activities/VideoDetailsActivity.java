@@ -51,6 +51,14 @@ public class VideoDetailsActivity extends ConfigurationHandledActivity<VideoNewO
     }
 
     /**
+     * Adds the video to local store.
+     */
+    public void addVideo(View view)
+    {
+       mOps.addVideoToLocalStore();
+    }
+
+    /**
      * Stores locally and uploads the video.
      */
     public void uploadVideo(View view)
