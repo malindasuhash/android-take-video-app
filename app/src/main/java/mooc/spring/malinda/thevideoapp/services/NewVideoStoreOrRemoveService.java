@@ -1,12 +1,16 @@
 package mooc.spring.malinda.thevideoapp.services;
 
 import android.app.IntentService;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+import java.util.UUID;
+
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.VideoEx;
+import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
 import mooc.spring.malinda.thevideoapp.utils.L;
 
 
@@ -39,6 +43,26 @@ public class NewVideoStoreOrRemoveService extends IntentService {
         L.logI("Received the call to add the video.");
         VideoEx video = (VideoEx)data.getSerializableExtra(Constants.Video);
         L.logI("Video is " + video);
+
+        Uri diaryResolver = VideoDiaryContract.VideoEntry.CONTENT_URI;
+        L.logI("Resolver is " + diaryResolver);
+
+        ContentValues values = new ContentValues();
+        values.put(VideoDiaryContract.VideoEntry.COLUMN_TITLE, video.getTitle());
+        values.put(VideoDiaryContract.VideoEntry.COLUMN_CREATED_DATETIME, video.getDateTaken());
+        values.put(VideoDiaryContract.VideoEntry.COLUMN_DURATION, video.getDuration());
+        values.put(VideoDiaryContract.VideoEntry.COLUMN_CONTENT_TYPE, video.getContentType());
+        values.put(VideoDiaryContract.VideoEntry.COLUMN_DESC, video.getDescription());
+        values.put(VideoDiaryContract.VideoEntry.COLUMN_DATA_URL, video.getDataUrl());
+        values.put(VideoDiaryContract.VideoEntry.COLUMN_REFERENCE, UUID.randomUUID().toString());
+
+        Uri result = getContentResolver().insert(diaryResolver, values);
+        L.logI("Add video result " + result);
+
+        if (result != null)
+        {
+            getContentResolver().notifyChange(result, null);
+        }
     }
 
     private void removeVideo(Uri videoUri)
