@@ -3,10 +3,12 @@ package mooc.spring.malinda.thevideoapp.quries;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.provider.MediaStore;
 
 import mooc.spring.malinda.thevideoapp.operations.models.MediaStoreVideo;
+import mooc.spring.malinda.thevideoapp.utils.L;
 
 /**
  * Container for queries to get data from Media Store.
@@ -37,7 +39,7 @@ public class VideoMediaStoreQuery {
             if (cursor.moveToFirst())
                 // Get the Video metadata from Android Video Content
                 // Provider
-                return getVideo(cursor);
+                return getVideo(cursor, videoUri);
             else
                 // Return null if there id no row returned by the
                 // Query.
@@ -45,17 +47,12 @@ public class VideoMediaStoreQuery {
         }
     }
 
-    private MediaStoreVideo getVideo(Cursor cursor)
+    private MediaStoreVideo getVideo(Cursor cursor, Uri videoUri)
     {
         // Get the Name of the Video, which is "videoName.mp4"
         String name =
                 cursor.getString
                         (cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME));
-
-        // Get the Duration of the video.
-        long duration =
-                cursor.getLong
-                        (cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
 
         // Get the MIME_TYPE of the video.
         String contentType =
@@ -71,10 +68,17 @@ public class VideoMediaStoreQuery {
 
         MediaStoreVideo video = new MediaStoreVideo();
         video.setName(name);
-        video.setDuration(duration);
         video.setMimeType(contentType);
         video.setDateTaken(dateTaken);
         video.setLocation(location);
+
+        // Following seems to return most accurate duration for the given video.
+        MediaMetadataRetriever data = new MediaMetadataRetriever();
+        data.setDataSource(context, videoUri);
+        String videoDuration = data.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+        L.logI("Video duration " + videoDuration);
+
+        video.setDuration(Long.parseLong(videoDuration));
 
         return video;
 
