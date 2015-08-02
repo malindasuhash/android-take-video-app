@@ -38,6 +38,10 @@ public class VideoAdapter extends BaseAdapter {
         TextView titleText = (TextView) convertView.findViewById(R.id.vidName);
         titleText.setText(video.getTitle());
 
+        TextView videoDesc = (TextView) convertView.findViewById(R.id.vid_description);
+        String desc = video.getDescription();
+        videoDesc.setText(video.getDescription());
+
         /*TextView ratings = (TextView) convertView.findViewById(R.id.ratings);
         ratings.setText(Float.toString(video.getRating()));
 

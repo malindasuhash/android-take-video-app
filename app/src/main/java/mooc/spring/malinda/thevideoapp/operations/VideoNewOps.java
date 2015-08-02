@@ -25,9 +25,9 @@ import mooc.spring.malinda.thevideoapp.utils.Toaster;
 public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails, DialogInfo {
 
     private WeakReference<Activity> mActivity;
-    private final int MAX_TITLE_LEN = 15;
+    private final int MAX_TITLE_LEN = 25;
     private int currentTitleLen;
-    private final int MAX_DESC_LEN = 30;
+    private final int MAX_DESC_LEN = 40;
     private int currentDescLen;
     private MediaStoreVideo mStoredVideo;
     private Uri videoUri;
@@ -107,8 +107,16 @@ public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails, DialogInfo
         String title = ((EditText)getActivity().findViewById(R.id.vid_t)).getText().toString();
         String desc = ((EditText)getActivity().findViewById(R.id.des_t)).getText().toString();
 
+        if (currentTitleLen < 0) {
+            title = title.substring(0, MAX_TITLE_LEN - 1); // trimed
+        }
+
+        if (currentDescLen < 0) {
+            desc = desc.substring(0, MAX_DESC_LEN - 1); // trimmed
+        }
+
         AddVideoToLocalStoreCommand command = new AddVideoToLocalStoreCommand();
-        command.addVideo(mActivity.get().getApplicationContext(), title, desc, videoUri, mStoredVideo);
+        command.addVideo(mActivity.get().getApplicationContext(), title.length() == 0 ? mStoredVideo.getName() : title, desc, videoUri, mStoredVideo);
     }
 
     /**

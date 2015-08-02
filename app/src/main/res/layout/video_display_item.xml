@@ -33,8 +33,10 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="[new]"
         android:background="@android:color/transparent"
-        android:id="@+id/textView"
-        style="@android:style/TextAppearance.Holo.Small" />
+        android:id="@+id/vid_description"
+        style="@android:style/TextAppearance.Holo.Small"
+        android:textColor="@android:color/holo_blue_bright"
+        android:textStyle="italic" />
 
     <TextView
         android:layout_width="wrap_content"
