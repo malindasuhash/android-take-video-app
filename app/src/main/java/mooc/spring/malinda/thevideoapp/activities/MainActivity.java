@@ -84,6 +84,14 @@ public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
         findViewById(R.id.listView).setVisibility(View.GONE);
     }
 
+    /**
+     * Shows the loading screen.
+     */
+    public void loading()
+    {
+        findViewById(R.id.loading).setVisibility(View.VISIBLE);
+    }
+
     public void setListViewClick()
     {
         ListView listView = (ListView)findViewById(R.id.listView);

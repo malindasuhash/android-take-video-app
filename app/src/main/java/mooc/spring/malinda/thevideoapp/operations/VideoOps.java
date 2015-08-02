@@ -88,12 +88,16 @@ public class VideoOps implements OpsConfig, CanShowAllVideos {
         mVideoList = new WeakReference<>((ListView)getActivity().findViewById(R.id.listView));
 
         if (firstTimeIn) {
+            getActivity().loading();
             mAdapter = new VideoAdapter(getActivity().getApplicationContext());
             getVideoList();
         }
 
         mVideoList.get().setAdapter(mAdapter);
-        setLoadState();
+
+        if (!firstTimeIn) {
+            setLoadState();
+        }
     }
 
     private void showVideoDetails(long id, Uri videoUri)
