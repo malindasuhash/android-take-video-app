@@ -11,7 +11,7 @@ import java.io.File;
  */
 public class SqlDbHelper extends SQLiteOpenHelper {
 
-    private static final int DATABSE_VERSION = 9;
+    private static final int DATABSE_VERSION = 10;
 
     private static final String DATABASE_NAME = "video.diary";
 

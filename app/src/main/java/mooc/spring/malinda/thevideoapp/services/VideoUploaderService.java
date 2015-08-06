@@ -5,35 +5,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
-import mooc.spring.malinda.thevideoapp.operations.BroadcastRefresh;
 import mooc.spring.malinda.thevideoapp.operations.Video;
 import mooc.spring.malinda.thevideoapp.operations.VideoEx;
-import mooc.spring.malinda.thevideoapp.operations.VideoHandler;
-import mooc.spring.malinda.thevideoapp.operations.VideoStorageHandler;
-import mooc.spring.malinda.thevideoapp.retrofit.VideoMetaDto;
-import mooc.spring.malinda.thevideoapp.retrofit.VideoStatus;
+import mooc.spring.malinda.thevideoapp.services.uploadSteps.CreateFolderStep;
+import mooc.spring.malinda.thevideoapp.services.uploadSteps.Step;
+import mooc.spring.malinda.thevideoapp.services.uploadSteps.UploadFileStep;
 import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
-import mooc.spring.malinda.thevideoapp.utils.L;
-import mooc.spring.malinda.thevideoapp.utils.NotificationHandler;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
 public class VideoUploaderService extends IntentService {
 
+    private List<Step> videoUploadSteps = new ArrayList<>();
+
     public VideoUploaderService() {
         super("VideoUploaderService");
-    }
-
-    /**
-     * Creates an intent to upload the video to server.
-     */
-    public static Intent makeUploadVideoIntent(Context context, VideoEx video) {
-        L.logI("Creating the store and upload intent.");
-
-        Intent intent = new Intent(context, VideoUploaderService.class);
-        intent.putExtra(Constants.Video, video);
-
-        return intent;
+        videoUploadSteps.add(new CreateFolderStep());
+        videoUploadSteps.add(new UploadFileStep());
     }
 
     /**
@@ -55,9 +47,32 @@ public class VideoUploaderService extends IntentService {
         return storeAndUpload;
     }
 
+    /**
+     * Makes an intent to upload the video.
+     */
+    public static Intent makeIntent(Context context, VideoEx video)
+    {
+        Intent intent = new Intent(context, VideoUploaderService.class);
+        intent.putExtra(Constants.Video, video);
+        return intent;
+    }
+
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
-            VideoHandler mVideoHandler = new VideoHandler();
+
+            try
+            {
+                for (Step step : videoUploadSteps)
+                {
+                    step.execute((VideoEx)intent.getSerializableExtra(Constants.Video));
+                }
+            }
+            catch (Exception ex)
+            {
+                Toaster.Show(this, this.getString(R.string.sorry_there_is_a_problem));
+            }
+
+            /*VideoHandler mVideoHandler = new VideoHandler();
             VideoStorageHandler mStorage = new VideoStorageHandler();
 
             Log.i(Constants.TAG, "Received call in the service.");
@@ -99,7 +114,7 @@ public class VideoUploaderService extends IntentService {
 
             NotificationHandler.finishNotification(this.getApplicationContext(), true);
 
-            BroadcastRefresh.broadcastRefresh(this.getApplicationContext());
+            BroadcastRefresh.broadcastRefresh(this.getApplicationContext());*/
         }
     }
 }
