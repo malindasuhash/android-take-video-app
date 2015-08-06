@@ -12,7 +12,7 @@ import retrofit.RetrofitError;
 
 public class CreateFolderStep implements Step {
 
-    public boolean execute(VideoEx video) {
+    public void execute(VideoEx video) {
 
         L.logI("Creating the folder in remote server");
 
@@ -28,7 +28,7 @@ public class CreateFolderStep implements Step {
         try
         {
             ServiceEndPointAdapter.create().createFolder(request);
-            return true;
+            return;
         }
         catch (RetrofitError error)
         {
@@ -37,11 +37,10 @@ public class CreateFolderStep implements Step {
 
             if (status == Constants.ConflictHttpStatus) {
                 L.logI("Folder already exists, which is a good thing.");
-                return false;
+                return;
             }
-        }
 
-        L.logI("Something bad has happened.");
-        return false;
+            throw error;
+        }
     }
 }

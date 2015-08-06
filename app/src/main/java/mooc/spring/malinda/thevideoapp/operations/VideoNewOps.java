@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.EditText;
 
 import java.lang.ref.WeakReference;
+import java.util.UUID;
 
 import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.activities.CanUpdateInputs;
@@ -102,7 +103,25 @@ public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails, DialogInfo
     /**
      * Adds the video information to the database.
      */
-    public VideoEx addVideoToLocalStore()
+    public void addVideoToLocalStore()
+    {
+        VideoEx video = getVideo();
+
+        AddVideoToLocalStoreCommand command = new AddVideoToLocalStoreCommand();
+        command.addVideo(mActivity.get().getApplicationContext(), video);
+    }
+
+    /**
+     * Stores the video locally and uploads to server.
+     */
+    public void storeAndUploadVideo()
+    {
+        addVideoToLocalStore();
+
+        // Now upload
+    }
+
+    private VideoEx getVideo()
     {
         String title = ((EditText)getActivity().findViewById(R.id.vid_t)).getText().toString();
         String desc = ((EditText)getActivity().findViewById(R.id.des_t)).getText().toString();
@@ -115,20 +134,9 @@ public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails, DialogInfo
             desc = desc.substring(0, MAX_DESC_LEN - 1); // trimmed
         }
 
-        AddVideoToLocalStoreCommand command = new AddVideoToLocalStoreCommand();
-        VideoEx videoAdded = command.addVideo(mActivity.get().getApplicationContext(), title.length() == 0 ? mStoredVideo.getName() : title, desc, videoUri, mStoredVideo);
+        VideoEx video = VideoEx.map(title.length() == 0 ? mStoredVideo.getName() : title, desc, videoUri.toString(), mStoredVideo, UUID.randomUUID().toString(), false);
 
-        return videoAdded;
-    }
-
-    /**
-     * Stores the video locally and uploads to server.
-     */
-    public void storeAndUploadVideo()
-    {
-        VideoEx video = addVideoToLocalStore();
-
-        // Now upload
+        return video;
     }
 
     /**
