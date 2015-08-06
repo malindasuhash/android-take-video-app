@@ -10,7 +10,7 @@ import mooc.spring.malinda.thevideoapp.retrofit.ServiceEndPointAdapter;
 import mooc.spring.malinda.thevideoapp.utils.L;
 import retrofit.RetrofitError;
 
-public class CreateFolderStep {
+public class CreateFolderStep implements Step {
 
     public boolean execute(VideoEx video) {
 
