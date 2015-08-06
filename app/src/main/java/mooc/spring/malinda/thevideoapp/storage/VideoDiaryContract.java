@@ -39,6 +39,7 @@ public class VideoDiaryContract {
         public static String COLUMN_VIDEO_ID = "video_id";
         public static String COLUMN_LOCAL_VIDEO_ID = "video_id_local";
         public static String COLUMN_CREATED_DATETIME = "created_date_time";
+        public static String COLUMN_UPLOAD_COMPLETE = "upload_complete";
 
         /**
          * Provides the uri of the active/change record(s).

@@ -12,6 +12,8 @@ public class VideoEx implements Serializable {
     private String contentType;
     private String dataUrl;
     private long dateTaken;
+    private String reference;
+    private boolean uploaded;
 
     public String getTitle() {
         return title;
@@ -61,7 +63,7 @@ public class VideoEx implements Serializable {
         this.dateTaken = dateTaken;
     }
 
-    public static VideoEx map(String title, String description, String dataUrl, MediaStoreVideo mediaStoreVideo)
+    public static VideoEx map(String title, String description, String dataUrl, MediaStoreVideo mediaStoreVideo, String reference, boolean uploaded)
     {
         VideoEx video = new VideoEx();
         video.setTitle(title);
@@ -70,7 +72,33 @@ public class VideoEx implements Serializable {
         video.setDateTaken(mediaStoreVideo.getDateTaken());
         video.setDuration(mediaStoreVideo.getDuration());
         video.setDataUrl(dataUrl);
+        video.setReference(reference);
+        video.setUploaded(uploaded);
 
         return video;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+
+    public boolean isUploaded() {
+        return uploaded;
+    }
+
+    public void setUploaded(boolean uploaded) {
+        this.uploaded = uploaded;
+    }
+
+    public void setUploadedWithStr(String uploaded) {
+        this.uploaded = Boolean.getBoolean(uploaded);
+    }
+
+    public String getUploadedWithStr() {
+        return String.valueOf(this.uploaded);
     }
 }

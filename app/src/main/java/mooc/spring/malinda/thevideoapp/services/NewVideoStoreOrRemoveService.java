@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
-import java.util.UUID;
-
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.VideoEx;
 import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
@@ -54,7 +52,8 @@ public class NewVideoStoreOrRemoveService extends IntentService {
         values.put(VideoDiaryContract.VideoEntry.COLUMN_CONTENT_TYPE, video.getContentType());
         values.put(VideoDiaryContract.VideoEntry.COLUMN_DESC, video.getDescription());
         values.put(VideoDiaryContract.VideoEntry.COLUMN_DATA_URL, video.getDataUrl());
-        values.put(VideoDiaryContract.VideoEntry.COLUMN_REFERENCE, UUID.randomUUID().toString());
+        values.put(VideoDiaryContract.VideoEntry.COLUMN_REFERENCE, video.getReference());
+        values.put(VideoDiaryContract.VideoEntry.COLUMN_UPLOAD_COMPLETE, video.getUploadedWithStr());
 
         Uri result = getContentResolver().insert(diaryResolver, values);
         L.logI("Add video result " + result);

@@ -102,7 +102,7 @@ public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails, DialogInfo
     /**
      * Adds the video information to the database.
      */
-    public void addVideoToLocalStore()
+    public VideoEx addVideoToLocalStore()
     {
         String title = ((EditText)getActivity().findViewById(R.id.vid_t)).getText().toString();
         String desc = ((EditText)getActivity().findViewById(R.id.des_t)).getText().toString();
@@ -116,7 +116,19 @@ public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails, DialogInfo
         }
 
         AddVideoToLocalStoreCommand command = new AddVideoToLocalStoreCommand();
-        command.addVideo(mActivity.get().getApplicationContext(), title.length() == 0 ? mStoredVideo.getName() : title, desc, videoUri, mStoredVideo);
+        VideoEx videoAdded = command.addVideo(mActivity.get().getApplicationContext(), title.length() == 0 ? mStoredVideo.getName() : title, desc, videoUri, mStoredVideo);
+
+        return videoAdded;
+    }
+
+    /**
+     * Stores the video locally and uploads to server.
+     */
+    public void storeAndUploadVideo()
+    {
+        VideoEx video = addVideoToLocalStore();
+
+        // Now upload
     }
 
     /**

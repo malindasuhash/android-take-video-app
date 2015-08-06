@@ -8,7 +8,7 @@ public class Constants {
 
     public static final long MEGA_BYTE = 1024 * 1024;
 
-    public static final String Server_Url = "http://10.0.2.2:8080";
+    public static final String Server_Url = "https://api.onedrive.com/v1.0/";
 
     public static final String VideoPath = "VideoPath";
 
@@ -29,4 +29,6 @@ public class Constants {
     public static final String Remove = "video-remove";
 
     public static final String Add = "video-add";
+
+    public static final int ConflictHttpStatus = 409;
 }

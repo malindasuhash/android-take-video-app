@@ -31,6 +31,7 @@ public class SqlDbHelper extends SQLiteOpenHelper {
                 + VideoDiaryContract.VideoEntry.COLUMN_DURATION + " TEXT, "
                 + VideoDiaryContract.VideoEntry.COLUMN_CONTENT_TYPE + " TEXT, "
                 + VideoDiaryContract.VideoEntry.COLUMN_DESC + " TEXT, "
+                + VideoDiaryContract.VideoEntry.COLUMN_UPLOAD_COMPLETE + " TEXT, "
                 + VideoDiaryContract.VideoEntry.COLUMN_DATA_URL + " TEXT "
                 + " )";
 

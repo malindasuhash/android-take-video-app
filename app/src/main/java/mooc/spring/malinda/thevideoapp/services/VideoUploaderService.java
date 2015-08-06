@@ -8,11 +8,13 @@ import android.util.Log;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.BroadcastRefresh;
 import mooc.spring.malinda.thevideoapp.operations.Video;
+import mooc.spring.malinda.thevideoapp.operations.VideoEx;
 import mooc.spring.malinda.thevideoapp.operations.VideoHandler;
 import mooc.spring.malinda.thevideoapp.operations.VideoStorageHandler;
 import mooc.spring.malinda.thevideoapp.retrofit.VideoMetaDto;
 import mooc.spring.malinda.thevideoapp.retrofit.VideoStatus;
 import mooc.spring.malinda.thevideoapp.storage.VideoDiaryContract;
+import mooc.spring.malinda.thevideoapp.utils.L;
 import mooc.spring.malinda.thevideoapp.utils.NotificationHandler;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;
 
@@ -20,6 +22,18 @@ public class VideoUploaderService extends IntentService {
 
     public VideoUploaderService() {
         super("VideoUploaderService");
+    }
+
+    /**
+     * Creates an intent to upload the video to server.
+     */
+    public static Intent makeUploadVideoIntent(Context context, VideoEx video) {
+        L.logI("Creating the store and upload intent.");
+
+        Intent intent = new Intent(context, VideoUploaderService.class);
+        intent.putExtra(Constants.Video, video);
+
+        return intent;
     }
 
     /**

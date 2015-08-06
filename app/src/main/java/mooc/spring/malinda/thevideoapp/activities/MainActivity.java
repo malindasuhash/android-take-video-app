@@ -18,6 +18,7 @@ import mooc.spring.malinda.thevideoapp.R;
 import mooc.spring.malinda.thevideoapp.framework.ConfigurationHandledActivity;
 import mooc.spring.malinda.thevideoapp.framework.Constants;
 import mooc.spring.malinda.thevideoapp.operations.VideoOps;
+import mooc.spring.malinda.thevideoapp.operations.tasks.TestApiTask;
 import mooc.spring.malinda.thevideoapp.utils.L;
 
 
@@ -48,7 +49,11 @@ public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
         if (id == R.id.action_settings) {
             Intent showSource = new Intent(Intent.ACTION_VIEW);
             showSource.setData(Uri.parse("https://github.com/malindasuhash/android-take-video-app"));
-            startActivity(showSource); // No need to check
+            //startActivity(showSource); // No need to check
+
+            TestApiTask task = new TestApiTask();
+            task.execute();
+
             return true;
         }
 
@@ -92,9 +97,8 @@ public class MainActivity extends ConfigurationHandledActivity<VideoOps> {
         findViewById(R.id.loading).setVisibility(View.VISIBLE);
     }
 
-    public void setListViewClick()
-    {
-        ListView listView = (ListView)findViewById(R.id.listView);
+    public void setListViewClick() {
+        ListView listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
