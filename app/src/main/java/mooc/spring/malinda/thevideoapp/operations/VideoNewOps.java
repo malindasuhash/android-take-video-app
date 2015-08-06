@@ -7,6 +7,8 @@ import android.util.Log;
 import android.widget.EditText;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import mooc.spring.malinda.thevideoapp.R;
@@ -19,6 +21,9 @@ import mooc.spring.malinda.thevideoapp.framework.OpsConfig;
 import mooc.spring.malinda.thevideoapp.operations.dtos.LoadDataDto;
 import mooc.spring.malinda.thevideoapp.operations.models.MediaStoreVideo;
 import mooc.spring.malinda.thevideoapp.operations.tasks.NewVideoDetailsTask;
+import mooc.spring.malinda.thevideoapp.services.uploadSteps.CreateFolderStep;
+import mooc.spring.malinda.thevideoapp.services.uploadSteps.Step;
+import mooc.spring.malinda.thevideoapp.services.uploadSteps.UploadFileStep;
 import mooc.spring.malinda.thevideoapp.utils.DialogInfo;
 import mooc.spring.malinda.thevideoapp.utils.L;
 import mooc.spring.malinda.thevideoapp.utils.Toaster;
@@ -32,6 +37,13 @@ public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails, DialogInfo
     private int currentDescLen;
     private MediaStoreVideo mStoredVideo;
     private Uri videoUri;
+    private List<Step> videoUploadSteps = new ArrayList<>();
+
+    public VideoNewOps()
+    {
+        videoUploadSteps.add(new CreateFolderStep());
+        videoUploadSteps.add(new UploadFileStep());
+    }
 
     @Override
     public void whenYesClicked() {
@@ -118,7 +130,20 @@ public class VideoNewOps implements OpsConfig, CanSetNewVideoDetails, DialogInfo
     {
         addVideoToLocalStore();
 
+        VideoEx video = getVideo();
+
         // Now upload
+        try
+        {
+            for (Step step : videoUploadSteps)
+            {
+                step.execute(video);
+            }
+        }
+        catch (Exception ex)
+        {
+            Toaster.Show(getActivity(), getActivity().getString(R.string.sorry_there_is_a_problem));
+        }
     }
 
     private VideoEx getVideo()

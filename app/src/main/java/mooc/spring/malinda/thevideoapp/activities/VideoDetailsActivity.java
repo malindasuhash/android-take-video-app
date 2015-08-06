@@ -63,7 +63,7 @@ public class VideoDetailsActivity extends ConfigurationHandledActivity<VideoNewO
      */
     public void uploadVideo(View view)
     {
-        //mOps.storeDetailsAnduploadVideo();
+        mOps.storeAndUploadVideo();
         finish();
     }
 

@@ -132,7 +132,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/uploadToCloud"
             android:src="@drawable/ic_cloud_upload_white_48dp"
-            android:background="@android:color/transparent" />
+            android:background="@android:color/transparent"
+            android:onClick="uploadVideo" />
 
         <TextView
             android:layout_width="wrap_content"
