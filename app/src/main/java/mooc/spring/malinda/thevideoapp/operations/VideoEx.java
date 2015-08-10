@@ -14,6 +14,7 @@ public class VideoEx implements Serializable {
     private long dateTaken;
     private String reference;
     private boolean uploaded;
+    private String location;
 
     public String getTitle() {
         return title;
@@ -74,6 +75,7 @@ public class VideoEx implements Serializable {
         video.setDataUrl(dataUrl);
         video.setReference(reference);
         video.setUploaded(uploaded);
+        video.setLocation(mediaStoreVideo.getLocation());
 
         return video;
     }
@@ -100,5 +102,13 @@ public class VideoEx implements Serializable {
 
     public String getUploadedWithStr() {
         return String.valueOf(this.uploaded);
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }
